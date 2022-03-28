@@ -1,11 +1,22 @@
 package ru.nsu.yattroman.dormsys.entity;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
 public class Inhabitant {
 
-    private String fisrtName;
-    private String secondName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    private Room livingRoom;
+    @Column(name = "is_dormitory_inhabitant")
+    private boolean isDormitoryInhabitant;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Student studentInfo;
 
 }
