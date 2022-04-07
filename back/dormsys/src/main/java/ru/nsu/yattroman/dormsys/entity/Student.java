@@ -13,12 +13,10 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "first_name")
-    private String firstName;
-    @Column(name = "second_name")
-    private String secondName;
-    @Column(name = "age")
-    private int age;
+    @OneToOne
+    @MapsId
+    private User user;
+
     @Column(name = "faculty")
     private String faculty;
     @Column(name = "education_base")

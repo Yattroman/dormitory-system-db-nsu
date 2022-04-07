@@ -6,6 +6,10 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     generate-ddl: true
+    properties:
+      hibernate:
+        validator:
+          apply-to-ddl: true
