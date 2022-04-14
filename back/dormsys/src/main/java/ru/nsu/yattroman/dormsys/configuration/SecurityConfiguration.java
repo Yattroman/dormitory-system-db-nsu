@@ -9,17 +9,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import ru.nsu.yattroman.dormsys.security.SecurityHandler;
-import ru.nsu.yattroman.dormsys.service.UserService;
+import ru.nsu.yattroman.dormsys.service.CustomUserDetailsService;
 
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-    private final UserService userService;
+    private final CustomUserDetailsService customUserDetailsService;
     private final SecurityHandler securityHandler;
 
     @Autowired
-    public SecurityConfiguration(UserService userService, SecurityHandler securityHandler) {
-        this.userService = userService;
+    public SecurityConfiguration(CustomUserDetailsService customUserDetailsService, SecurityHandler securityHandler) {
+        this.customUserDetailsService = customUserDetailsService;
         this.securityHandler = securityHandler;
     }
 
@@ -51,7 +51,7 @@ public class SecurityConfiguration {
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setPasswordEncoder(passwordEncoder());
-        authenticationProvider.setUserDetailsService(userService);
+        authenticationProvider.setUserDetailsService(customUserDetailsService);
 
         return authenticationProvider;
     }

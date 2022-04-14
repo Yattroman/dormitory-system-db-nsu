@@ -1,0 +1,24 @@
+:root {
+    --color-bg: #2C2C32;
+    --color-active: #0f7dc6;
+}
+
+header {
+    background-color: var(--color-bg);
+    padding: 2rem 0;
+    text-align: center;
+}
+
+header > a {
+    color: white;
+    text-decoration: none;
+    padding: 0 1rem;
+}
+header > a:hover {
+    text-decoration: underline;
+}
+
+.active {
+    color: var(--color-active);
+    cursor: default;
+}

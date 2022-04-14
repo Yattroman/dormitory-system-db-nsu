@@ -1,63 +1,53 @@
 package ru.nsu.yattroman.dormsys.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import ru.nsu.yattroman.dormsys.DTO.UserDto;
 import ru.nsu.yattroman.dormsys.entity.User;
-import ru.nsu.yattroman.dormsys.entity.roles.Privilege;
-import ru.nsu.yattroman.dormsys.entity.roles.Role;
+import ru.nsu.yattroman.dormsys.exceptions.UserAlreadyExistException;
+import ru.nsu.yattroman.dormsys.repository.RoleRepository;
 import ru.nsu.yattroman.dormsys.repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.Collections;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserService implements IUserService{
 
+    private final RoleRepository roleRepository;
     private final UserRepository userRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(RoleRepository roleRepository, UserRepository userRepository) {
+        this.roleRepository = roleRepository;
         this.userRepository = userRepository;
     }
 
     @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findUserByNickname(username);
-        if(user == null){
-            throw new UsernameNotFoundException(String.format("User '%s' not found", username));
+    public User registerNewUserAccount(UserDto userDto) throws UserAlreadyExistException {
+        if(emailExist(userDto.getEmail()) || nicknameExist(userDto.getNickname())){
+            throw new UserAlreadyExistException("User with specified email or nickname is already exist!");
         }
-        return new org.springframework.security.core.userdetails.User(user.getNickname(), user.getPassword(), getAuthorities(user.getRoles()));
+
+        User user = new User();
+        user.setNickname(userDto.getNickname());
+        user.setFirstName(userDto.getFirstName());
+        user.setSecondName(userDto.getSecondName());
+        user.setPassword(userDto.getPassword());
+        user.setEmail(userDto.getEmail());
+
+        var role = roleRepository.findByName("ROLE_USER");
+
+        user.setRoles(Collections.singletonList(role));
+
+        return userRepository.save(user);
     }
 
-    private Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles) {
-        return getGrantedAuthorities(getPrivileges(roles));
+    private boolean emailExist(String email) {
+        return userRepository.findUserByEmail(email) != null;
     }
 
-    private List<String> getPrivileges(Collection<Role> roles) {
-        List<String> privileges = new ArrayList<>();
-        List<Privilege> collection = new ArrayList<>();
-
-        roles.forEach(role ->{
-            privileges.add(role.getName());
-            collection.addAll(role.getPrivileges());
-        });
-
-        collection.forEach(item -> privileges.add(item.getName()));
-
-        return privileges;
+    private boolean nicknameExist(String email) {
+        return userRepository.findUserByEmail(email) != null;
     }
 
-    private List<GrantedAuthority> getGrantedAuthorities(List<String> privileges) {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        privileges.forEach(privilege -> authorities.add(new SimpleGrantedAuthority(privilege)));
-        return authorities;
-    }
 }

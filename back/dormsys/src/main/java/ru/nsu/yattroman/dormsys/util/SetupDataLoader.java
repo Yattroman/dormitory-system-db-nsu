@@ -49,6 +49,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         Privilege absoluteReadPrivilege = createPrivilegeIfNotFound("Absolute Read Privilege");
 
         createRoleIfNotFound("ROLE_ADMIN", Arrays.asList(absoluteReadPrivilege, absoluteWritePrivilege));
+        createRoleIfNotFound("ROLE_USER", null);
         createRoleIfNotFound("ROLE_STUDENT", null);
         createRoleIfNotFound("ROLE_INHABITANT", null);
         createRoleIfNotFound("ROLE_DORMITORY_MANAGER", null);
