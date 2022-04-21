@@ -6,11 +6,13 @@ export default function Layout(){
             <header>
                 <NavLink to="/">Home</NavLink>
                 <NavLink to="/profile">Profile</NavLink>
+                <NavLink to="/signup">Sign Up</NavLink>
+                <NavLink to="/login">Login</NavLink>
             </header>
             <main>
                 <Outlet/>
             </main>
-            <footer>
+            <footer className="bg-light fixed-bottom py-5">
                 &copy; Made by Yattroman. 2022.
             </footer>
         </>

@@ -33,12 +33,9 @@ public class Room {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
     private List<Furniture> furnitures;
 
-    public Room(@NonNull String roomNumber, @NonNull int bedsNumber) {
+    public Room(@NonNull String roomNumber, int bedsNumber) {
         this.roomNumber = roomNumber;
         this.bedsNumber = bedsNumber;
     }
-
-    //    @OneToOne(fetch = FetchType.LAZY)
-//    private Contract contract;
 
 }

@@ -21,7 +21,7 @@ public class Inhabitant {
     @MapsId
     private User user;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Contract contract;
     @OneToMany(mappedBy = "inhabitant")
     private Set<Offense> offenses;

@@ -22,7 +22,8 @@ public class Dormitory {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "dormitory")
     private Set<Room> rooms;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    // TODO: another cascade
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private DormitoryManager manager;
 
     public Dormitory(String name) {

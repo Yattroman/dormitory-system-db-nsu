@@ -18,6 +18,10 @@ header > a:hover {
     text-decoration: underline;
 }
 
+footer {
+    text-align: center;
+}
+
 .active {
     color: var(--color-active);
     cursor: default;

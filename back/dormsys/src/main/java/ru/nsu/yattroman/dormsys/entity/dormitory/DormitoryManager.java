@@ -14,7 +14,7 @@ public class DormitoryManager {
     @MapsId
     private User user;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Dormitory dormitory;
 
 }

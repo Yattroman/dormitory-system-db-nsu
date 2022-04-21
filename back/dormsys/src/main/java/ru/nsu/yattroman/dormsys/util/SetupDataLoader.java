@@ -26,7 +26,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     private final DormitoryRepository dormitoryRepository;
     private final RoomRepository roomRepository;
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public SetupDataLoader(RoleRepository roleRepository, PrivilegeRepository privilegeRepository, UserRepository userRepository,
                            DormitoryRepository dormitoryRepository, RoomRepository roomRepository,
@@ -57,12 +57,14 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         Role adminRole = roleRepository.findByName("ROLE_ADMIN");
         User user = new User();
         user.setNickname("admin");
+        user.setFirstName("Jesus");
+        user.setSurname("Christ");
         user.setRoles(Collections.singletonList(adminRole));
         user.setPassword(passwordEncoder.encode("test"));
         userRepository.save(user);
 
-        var dormitory = createDormitoryIfNotFound("тройка");
-        dormitoryRepository.save(dormitory);
+        //var dormitory = createDormitoryIfNotFound("тройка");
+        //dormitoryRepository.save(dormitory);
 
         alreadySetup = true;
     }

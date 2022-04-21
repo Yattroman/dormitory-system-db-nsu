@@ -19,12 +19,12 @@ import ru.nsu.yattroman.dormsys.repository.UserRepository;
 import java.util.*;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class JwtUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
     @Autowired
-    public CustomUserDetailsService(UserRepository userRepository) {
+    public JwtUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

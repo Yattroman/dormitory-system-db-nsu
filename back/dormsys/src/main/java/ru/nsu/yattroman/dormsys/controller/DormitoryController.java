@@ -4,16 +4,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import ru.nsu.yattroman.dormsys.service.DormitoryService;
+import ru.nsu.yattroman.dormsys.service.IDormitoryService;
 
 @RestController
 @RequestMapping("/dormitory/{dormitoryName}")
 public class DormitoryController {
 
-    private final DormitoryService dormitoryService;
+    private final IDormitoryService dormitoryService;
 
     @Autowired
-    public DormitoryController(DormitoryService dormitoryService) {
+    public DormitoryController(IDormitoryService dormitoryService) {
         this.dormitoryService = dormitoryService;
     }
 

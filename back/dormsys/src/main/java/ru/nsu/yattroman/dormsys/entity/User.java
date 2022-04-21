@@ -30,9 +30,12 @@ public class User {
 //    @NonNull
     @Column(name = "first_name", length = 50)
     private String firstName;
+//    @NonNullc
+    @Column(name = "middle_name", length = 50)
+    private String middleName;
 //    @NonNull
-    @Column(name = "second_name", length = 50)
-    private String secondName;
+    @Column(name = "surname", length = 50)
+    private String surname;
 //    @NonNull
     private int age;
 //    @NonNull
@@ -48,7 +51,7 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private DormitoryManager dormitoryManager;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)// TODO почитать про каскадность в разные стороны
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Inhabitant inhabitant;
 
