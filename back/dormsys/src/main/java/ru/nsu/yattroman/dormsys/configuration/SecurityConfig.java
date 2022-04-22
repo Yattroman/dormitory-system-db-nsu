@@ -4,13 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.config.ldap.EmbeddedLdapServerContextSourceFactoryBean;
-import org.springframework.security.config.ldap.LdapBindAuthenticationManagerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -18,22 +14,20 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import ru.nsu.yattroman.dormsys.security.JwtAuthenticationEntryPoint;
 import ru.nsu.yattroman.dormsys.security.JwtTokenFilter;
 import ru.nsu.yattroman.dormsys.security.SecurityHandler;
-import ru.nsu.yattroman.dormsys.service.JwtUserDetailsService;
+import ru.nsu.yattroman.dormsys.service.UserDetailsServiceImpl;
 
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final JwtUserDetailsService jwtUserDetailsService;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
     private final SecurityHandler securityHandler;
     private final JwtTokenFilter jwtTokenFilter;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-    private AuthenticationManager authenticationManager;
-
     @Autowired
-    public SecurityConfig(JwtUserDetailsService jwtUserDetailsService, SecurityHandler securityHandler,
+    public SecurityConfig(UserDetailsServiceImpl userDetailsServiceImpl, SecurityHandler securityHandler,
                           JwtTokenFilter jwtTokenFilter, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint) {
-        this.jwtUserDetailsService = jwtUserDetailsService;
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
         this.securityHandler = securityHandler;
         this.jwtTokenFilter = jwtTokenFilter;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
@@ -78,8 +72,6 @@ public class SecurityConfig {
                 UsernamePasswordAuthenticationFilter.class
         );
 
-        authenticationManager = http.getSharedObject(AuthenticationManager.class);
-
         return http.build();
 
     }
@@ -89,17 +81,11 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // Пока так, я пока я не разобрался с auth manager
-    @Bean
-    public AuthenticationManager authenticationManager(){
-        return this.authenticationManager;
-    }
-
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        var authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setPasswordEncoder(passwordEncoder());
-        authenticationProvider.setUserDetailsService(jwtUserDetailsService);
+        authenticationProvider.setUserDetailsService(userDetailsServiceImpl);
 
         return authenticationProvider;
     }

@@ -13,3 +13,9 @@ spring:
       hibernate:
         validator:
           apply-to-ddl: true
+
+app:
+  security:
+    jwt:
+      secret: yattroman
+      expirationMs: 18000

@@ -19,12 +19,12 @@ import ru.nsu.yattroman.dormsys.repository.UserRepository;
 import java.util.*;
 
 @Service
-public class JwtUserDetailsService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
 
     @Autowired
-    public JwtUserDetailsService(UserRepository userRepository) {
+    public UserDetailsServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -37,6 +37,8 @@ public class JwtUserDetailsService implements UserDetailsService {
         }
         return new org.springframework.security.core.userdetails.User(user.getNickname(), user.getPassword(), getAuthorities(user.getRoles()));
     }
+
+//    public UserDetails loadUserByUsernameAndPassword(String username, String password)
 
     private Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles) {
         return getGrantedAuthorities(getPrivileges(roles));
