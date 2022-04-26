@@ -10,6 +10,7 @@ import ru.nsu.yattroman.dormsys.entity.roles.Role;
 import ru.nsu.yattroman.dormsys.util.Gender;
 
 import java.util.Collection;
+import java.util.Date;
 
 @Entity
 @Data
@@ -30,14 +31,14 @@ public class User {
 //    @NonNull
     @Column(name = "first_name", length = 50)
     private String firstName;
-//    @NonNullc
+//    @NonNull
     @Column(name = "middle_name", length = 50)
     private String middleName;
 //    @NonNull
     @Column(name = "surname", length = 50)
     private String surname;
 //    @NonNull
-    private int age;
+    private Date dateBirth;
 //    @NonNull
     @Enumerated(EnumType.STRING)
     private Gender gender;

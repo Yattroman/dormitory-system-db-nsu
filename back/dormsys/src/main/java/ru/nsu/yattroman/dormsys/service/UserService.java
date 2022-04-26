@@ -5,7 +5,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.nsu.yattroman.dormsys.DTO.UserDto;
 import ru.nsu.yattroman.dormsys.entity.User;
+import ru.nsu.yattroman.dormsys.entity.dormitory.DormitoryManager;
 import ru.nsu.yattroman.dormsys.exceptions.UserAlreadyExistException;
+import ru.nsu.yattroman.dormsys.repository.DormitoryManagerRepository;
 import ru.nsu.yattroman.dormsys.repository.RoleRepository;
 import ru.nsu.yattroman.dormsys.repository.UserRepository;
 
@@ -17,13 +19,16 @@ public class UserService implements IUserService{
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
 
+    private final DormitoryManagerRepository dormitoryManagerRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(RoleRepository roleRepository, UserRepository userRepository,
+                       PasswordEncoder passwordEncoder, DormitoryManagerRepository dormitoryManagerRepository) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.dormitoryManagerRepository = dormitoryManagerRepository;
     }
 
     @Override
@@ -52,6 +57,16 @@ public class UserService implements IUserService{
         System.out.println(user);
 
         return userRepository.save(user);
+    }
+
+    @Override
+    public User loadUserByNickname(String nickname) {
+        return userRepository.findUserByNickname(nickname);
+    }
+
+    @Override
+    public DormitoryManager getDormitoryManagerInfo(Long userId) {
+        return dormitoryManagerRepository.findDormitoryManagerById(userId);
     }
 
     private boolean emailExist(String email) {

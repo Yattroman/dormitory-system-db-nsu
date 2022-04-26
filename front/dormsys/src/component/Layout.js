@@ -1,20 +1,19 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import NavBar from "./NavBar";
 
 export default function Layout(){
+
     return(
-        <>
+        <div className="d-flex flex-column min-vh-100">
             <header>
-                <NavLink to="/">Home</NavLink>
-                <NavLink to="/profile">Profile</NavLink>
-                <NavLink to="/signup">Sign Up</NavLink>
-                <NavLink to="/login">Login</NavLink>
+                <NavBar/>
             </header>
-            <main>
+            <main className="mb-5">
                 <Outlet/>
             </main>
-            <footer className="bg-light fixed-bottom py-5">
+            <footer className="bg-light mt-auto py-5 text-center" >
                 &copy; Made by Yattroman. 2022.
             </footer>
-        </>
+        </div>
     )
 }

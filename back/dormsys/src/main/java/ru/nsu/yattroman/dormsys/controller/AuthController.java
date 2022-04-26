@@ -1,6 +1,7 @@
 package ru.nsu.yattroman.dormsys.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -12,11 +13,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import ru.nsu.yattroman.dormsys.DTO.UserDto;
+import ru.nsu.yattroman.dormsys.entity.User;
+import ru.nsu.yattroman.dormsys.entity.roles.Role;
 import ru.nsu.yattroman.dormsys.exceptions.UserAlreadyExistException;
 import ru.nsu.yattroman.dormsys.security.JwtRequest;
+import ru.nsu.yattroman.dormsys.security.JwtResponse;
 import ru.nsu.yattroman.dormsys.security.JwtTokenUtil;
 import ru.nsu.yattroman.dormsys.service.UserService;
 
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*") // TODO разобраться с CORS, сделать его на глобальном уровне
@@ -52,18 +57,18 @@ public class AuthController {
         var authentication = daoAuthenticationProvider.authenticate(
                 new UsernamePasswordAuthenticationToken(jwtRequest.getNickname(), jwtRequest.getPassword())
         );
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        UserDetails user =  (UserDetails) authentication.getPrincipal();
+        UserDetails userDetails =  (UserDetails) authentication.getPrincipal();
+        String jwt = jwtTokenUtil.generateToken(userDetails);
+        User user = userService.loadUserByNickname(userDetails.getUsername());
+        var userRoles = user.getRoles().stream().map(Role::getName).collect(Collectors.toList());
 
-        String jwt = jwtTokenUtil.generateToken(user);
-
-        // To Do - user to userDTO mapper
         return ResponseEntity
                 .ok()
-                .header(HttpHeaders.AUTHORIZATION,jwt)
-                .body(user);
+                .body(new JwtResponse(
+                        jwt, user.getId(), user.getNickname(), userDetails.getAuthorities(), userRoles
+                ));
     }
 
 }

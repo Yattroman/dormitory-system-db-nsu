@@ -1,11 +1,10 @@
 import React, {useState} from "react";
 import { Container, Button, Row, Col, Form, FormControl } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import AuthService from "../../services/AuthService";
 
 export default function SignUp() {
 
-    const url = "http://localhost:8080/api/user/signup";
+    const [message, setMessage] = useState("");
 
     const [form, setForm] = useState({
         nickname: '',
@@ -21,7 +20,7 @@ export default function SignUp() {
         setForm({...form, [e.target.name]: e.target.value })
     }
 
-    const resetButton = () => {
+    const handleReset = () => {
         setForm({
             nickname: '',
             firstName: '',
@@ -43,34 +42,32 @@ export default function SignUp() {
             }
         }
 
-        if (form.password !== form.confPassword) {
-            console.log("password Not Match");
-        } else {
-            console.log('A form was submitted with full name :'
-                + form.firstName + ' '
-                + form.surname + ' '
-                + form.middleName + ' ' +
-                ' and email :' + form.email + '');
-            axios.post(url,{
-                nickname: form.nickname,
-                firstName: form.firstName,
-                surname: form.surname,
-                middleName: form.middleName,
-                password: form.password,
-                email: form.email
-            }).then( response => {
-                console.log(response);
-            }).catch( error => {
-                console.log(error);
-            })
-        }
         e.preventDefault();
-    }
+
+        AuthService.register(
+            form.nickname,
+            form.firstName,
+            form.surname,
+            form.middleName,
+            form.password,
+            form.email
+        ).then(
+            (response) => {
+                setMessage(response.data.message);
+            },
+            (error) => {
+                const msg =
+                    (error.response && error.response.data && error.response.data.message) ||
+                    error.message || error.toString();
+                setMessage(msg);
+            }
+        );
+     }
 
     return (
-        <Container className="md mt-3">
-            <Form>
-                <Row className="mb-3">
+        <Container className="md mt-3 d-flex justify-content-center">
+            <Form className="col col-6">
+                <Row className="mb-3 justify-content-center">
                     <Form.Group controlId="firstnameId" className="col col-sm-4">
                         <Form.Label>Firstname</Form.Label>
                         <Form.Control
@@ -99,7 +96,7 @@ export default function SignUp() {
                         />
                     </Form.Group>
                 </Row>
-                <Row>
+                <Row className="justify-content-center">
                     <Form.Group className="mb-3 col col-sm-6" controlId="nicknameId" >
                         <Form.Label>Nickname</Form.Label>
                         <Form.Control
@@ -137,10 +134,16 @@ export default function SignUp() {
                         onChange={handleChange}
                     />
                 </Form.Group>
-                <Button type="submit" className="me-4 btn btn-success btn-lg btn-block"
-                        onClick={handleSubmit}>
-                    Sign up
-                </Button>
+                <Row className="justify-content-center">
+                    <Button type="submit" className="me-4 col col-sm-2 btn btn-success btn-lg btn-block m-1"
+                            onClick={handleSubmit}>
+                        Sign up
+                    </Button>
+                    <Button type="submit" className="me-4 col col-sm-2 btn btn-danger btn-lg btn-block m-1"
+                            onClick={handleReset}>
+                        Reset
+                    </Button>
+                </Row>
             </Form>
         </Container>
     )

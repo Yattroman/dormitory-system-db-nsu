@@ -4,11 +4,7 @@ import { Button, Container } from 'react-bootstrap';
 
 export default function Home() {
     return (
-        <div>
-            {/*<Container fluid>
-                    <p><Link to="/signup">Login</Link></p>
-                    <p><Link to="/login">Sign up</Link></p>
-                </Container>*/}
+        <div className="d-flex justify-content-center mt-5">
             <h1>Home</h1>
         </div>
     )

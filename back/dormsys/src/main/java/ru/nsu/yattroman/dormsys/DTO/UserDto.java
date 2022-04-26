@@ -7,25 +7,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.nsu.yattroman.dormsys.util.Gender;
 
+import java.util.Date;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
-public class UserDto {
+public class UserDto implements DTO{
 
-    @NotNull
     private String nickname;
-    @NotNull
     private String firstName;
-    @NotNull
     private String middleName;
-    @NotNull
     private String surname;
-    @NotNull
     private String email;
-    @NotNull
     @Enumerated(EnumType.STRING)
     private Gender gender;
-
-    @NotNull
+    private Date dateBirth;
     private String password;
+    private List<String> roles;
 
 }

@@ -55,11 +55,13 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         createRoleIfNotFound("ROLE_DORMITORY_MANAGER", null);
 
         Role adminRole = roleRepository.findByName("ROLE_ADMIN");
+        Role dormitoryManagerRole = roleRepository.findByName("ROLE_DORMITORY_MANAGER");
         User user = new User();
-        user.setNickname("admin");
-        user.setFirstName("Jesus");
-        user.setSurname("Christ");
-        user.setRoles(Collections.singletonList(adminRole));
+        user.setNickname("root");
+        user.setFirstName("Sergey");
+        user.setSurname("Dovlatov");
+        user.setEmail("s.dovlatov@gmail.com");
+        user.setRoles(Arrays.asList(dormitoryManagerRole, adminRole));
         user.setPassword(passwordEncoder.encode("test"));
         userRepository.save(user);
 
