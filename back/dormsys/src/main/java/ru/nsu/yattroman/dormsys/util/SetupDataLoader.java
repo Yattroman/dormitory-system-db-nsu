@@ -1,6 +1,7 @@
 package ru.nsu.yattroman.dormsys.util;
 
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -16,6 +17,7 @@ import ru.nsu.yattroman.dormsys.repository.*;
 import java.util.*;
 
 @Component
+@Slf4j
 public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     boolean alreadySetup = false;
@@ -65,8 +67,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         user.setPassword(passwordEncoder.encode("test"));
         userRepository.save(user);
 
-        //var dormitory = createDormitoryIfNotFound("тройка");
-        //dormitoryRepository.save(dormitory);
+        createDormitoryIfNotFound("third");
 
         alreadySetup = true;
     }
@@ -88,14 +89,16 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         if(dormitory == null){
             dormitory = new Dormitory(name);
             dormitory.setRooms(new HashSet<>());
+            dormitoryRepository.save(dormitory);
 
             // TODO для каждого общежития сделать свою инфу по этажам, комнатам и т.д.
+            //  [т.е. по категории общежития заполнить количество комнат на этаже, количество этажей]
             int roomsPerFloor = 28;
             int floorsNumber = 5;
             for (int i = 0; i < roomsPerFloor*floorsNumber; i++) {
-                var roomNumber = new StringBuilder().append(i/floorsNumber + 1).append(i%floorsNumber+1);
+                var roomNumber = new StringBuilder().append(i/floorsNumber + 1).append(i%floorsNumber + 1);
                 var big = createRoomIfNotFound(dormitory, roomNumber.append("б").toString(), 3);
-                var little = createRoomIfNotFound(dormitory, roomNumber.append("м").toString(), 1);
+                var little = createRoomIfNotFound(dormitory, roomNumber.deleteCharAt(roomNumber.length()-1).append("м").toString(), 1);
                 dormitory.addRoom(big);
                 dormitory.addRoom(little);
             }

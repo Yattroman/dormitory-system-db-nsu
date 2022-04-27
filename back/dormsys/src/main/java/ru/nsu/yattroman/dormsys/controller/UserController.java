@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.nsu.yattroman.dormsys.DTO.UserDto;
 import ru.nsu.yattroman.dormsys.mapper.UserMapper;
 import ru.nsu.yattroman.dormsys.security.JwtTokenUtil;
+import ru.nsu.yattroman.dormsys.service.IUserService;
 import ru.nsu.yattroman.dormsys.service.UserService;
 
 @RestController
@@ -13,12 +14,12 @@ import ru.nsu.yattroman.dormsys.service.UserService;
 @RequestMapping("/api/user")
 public class UserController {
 
-    private final UserService userService;
+    private final IUserService userService;
     private final JwtTokenUtil tokenUtil;
     private final UserMapper userMapper;
 
     @Autowired
-    public UserController(UserService userService, JwtTokenUtil tokenUtil, UserMapper userMapper) {
+    public UserController(IUserService userService, JwtTokenUtil tokenUtil, UserMapper userMapper) {
         this.userService = userService;
         this.tokenUtil = tokenUtil;
         this.userMapper = userMapper;

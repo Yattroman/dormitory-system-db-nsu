@@ -28,7 +28,7 @@ public class Inhabitant {
     @OneToMany(mappedBy = "inhabitant")
     private Set<Achievement> achievements;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Room room;
 
 }

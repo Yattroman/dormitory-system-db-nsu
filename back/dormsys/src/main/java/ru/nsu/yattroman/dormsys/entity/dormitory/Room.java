@@ -1,14 +1,15 @@
 package ru.nsu.yattroman.dormsys.entity.dormitory;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Room {
 
@@ -26,11 +27,12 @@ public class Room {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dormitory_id")
+    @JsonBackReference
     private Dormitory dormitory;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "room")
     private List<Inhabitant> inhabitants;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "room")
     private List<Furniture> furnitures;
 
     public Room(@NonNull String roomNumber, int bedsNumber) {

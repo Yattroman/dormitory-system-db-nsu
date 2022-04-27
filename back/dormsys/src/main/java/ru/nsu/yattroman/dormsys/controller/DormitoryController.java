@@ -2,12 +2,13 @@ package ru.nsu.yattroman.dormsys.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import ru.nsu.yattroman.dormsys.service.IDormitoryService;
 
 @RestController
-@RequestMapping("/dormitory/{dormitoryName}")
+@RequestMapping("/api/dormitory/{dormitoryName}")
 public class DormitoryController {
 
     private final IDormitoryService dormitoryService;
@@ -58,8 +59,11 @@ public class DormitoryController {
     }
 
     @GetMapping(value = "/rooms")
-    void showRooms(@PathVariable String dormitoryName){
-        dormitoryService.showAllDormitoryRooms(dormitoryName);
+    public ResponseEntity<?> showRooms(@PathVariable String dormitoryName){
+        var dormitory = dormitoryService.loadDormitoryByName(dormitoryName);
+        return ResponseEntity
+                .ok()
+                .body(dormitoryService.showAllDormitoryRooms(dormitory));
     }
 
 }

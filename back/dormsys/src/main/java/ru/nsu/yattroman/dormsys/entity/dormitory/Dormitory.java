@@ -1,14 +1,17 @@
 package ru.nsu.yattroman.dormsys.entity.dormitory;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Dormitory {
 
@@ -19,7 +22,12 @@ public class Dormitory {
     @NotNull
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "dormitory")
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            mappedBy = "dormitory",
+            orphanRemoval = true
+    )
+    @JsonManagedReference
     private Set<Room> rooms;
 
     // TODO: another cascade

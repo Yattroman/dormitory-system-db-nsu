@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.nsu.yattroman.dormsys.entity.User;
 import ru.nsu.yattroman.dormsys.entity.dormitory.Contract;
+import ru.nsu.yattroman.dormsys.entity.dormitory.Dormitory;
 import ru.nsu.yattroman.dormsys.entity.dormitory.Inhabitant;
 import ru.nsu.yattroman.dormsys.entity.dormitory.Room;
 import ru.nsu.yattroman.dormsys.repository.DormitoryRepository;
@@ -14,6 +15,7 @@ import ru.nsu.yattroman.dormsys.repository.UserRepository;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class DormitoryService implements IDormitoryService {
@@ -77,12 +79,18 @@ public class DormitoryService implements IDormitoryService {
     }
 
     @Override
-    public void showAllDormitoryRooms(String dormitoryName) {
-
+    public List<Room> showAllDormitoryRooms(Dormitory dormitory) {
+        return roomRepository.findRoomsByDormitory(dormitory);
     }
 
     @Override
     public void showRoomDetails(String dormitoryName, String roomNumber) {
 
     }
+
+    @Override
+    public Dormitory loadDormitoryByName(String name) {
+        return dormitoryRepository.findByName(name);
+    }
+
 }

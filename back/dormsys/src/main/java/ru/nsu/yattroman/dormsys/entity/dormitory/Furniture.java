@@ -18,7 +18,7 @@ public class Furniture {
     @NotNull
     private int count;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Room room;
 
 }
