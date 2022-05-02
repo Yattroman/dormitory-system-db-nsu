@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import {Container, Button, Row, Col, Form, FormControl, Alert, Card, CardImg} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import AuthService from "../../services/AuthService";
+import {MDBCard, MDBCardImage} from "mdb-react-ui-kit";
 
 export default function SignIn() {
 
@@ -49,8 +49,8 @@ export default function SignIn() {
 
     return (
         <Container className="md mt-3 d-flex justify-content-center">
-            <Card className="card-container">
-                <CardImg
+            <MDBCard className="p-4">
+                <MDBCardImage
                     src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
                     alt="profile-img"
                     className="profile-img-card"
@@ -86,7 +86,7 @@ export default function SignIn() {
                         </Form.Group>
                     )}
                 </Form>
-            </Card>
+            </MDBCard>
         </Container>
     )
 

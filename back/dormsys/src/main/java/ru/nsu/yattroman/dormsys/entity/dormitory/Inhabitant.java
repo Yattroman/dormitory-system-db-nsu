@@ -3,9 +3,10 @@ package ru.nsu.yattroman.dormsys.entity.dormitory;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.nsu.yattroman.dormsys.entity.Achievement;
+import ru.nsu.yattroman.dormsys.entity.Offense;
 import ru.nsu.yattroman.dormsys.entity.User;
 
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,7 +29,7 @@ public class Inhabitant {
     @OneToMany(mappedBy = "inhabitant")
     private Set<Achievement> achievements;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private Room room;
 
 }

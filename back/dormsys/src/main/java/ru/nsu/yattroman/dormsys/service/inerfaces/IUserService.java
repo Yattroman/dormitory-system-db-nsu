@@ -1,4 +1,4 @@
-package ru.nsu.yattroman.dormsys.service;
+package ru.nsu.yattroman.dormsys.service.inerfaces;
 
 import ru.nsu.yattroman.dormsys.DTO.UserDto;
 import ru.nsu.yattroman.dormsys.entity.User;

@@ -30,9 +30,11 @@ public class Room {
     @JsonBackReference
     private Dormitory dormitory;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "room")
+    @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST},
+            fetch = FetchType.LAZY, mappedBy = "room")
     private List<Inhabitant> inhabitants;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "room")
+    @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST},
+            fetch = FetchType.LAZY, mappedBy = "room")
     private List<Furniture> furnitures;
 
     public Room(@NonNull String roomNumber, int bedsNumber) {

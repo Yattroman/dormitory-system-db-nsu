@@ -2,8 +2,12 @@ package ru.nsu.yattroman.dormsys.entity.dormitory;
 
 import com.sun.istack.NotNull;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Setter
+@Getter
 public class Furniture {
 
     @Id
@@ -16,9 +20,9 @@ public class Furniture {
     @NotNull
     private String name;
     @NotNull
-    private int count;
+    private String category;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private Room room;
 
 }

@@ -3,13 +3,16 @@ package ru.nsu.yattroman.dormsys.entity.roles;
 import com.sun.istack.NotNull;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.nsu.yattroman.dormsys.entity.User;
 
 import java.util.Collection;
 
 @Entity
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 public class Role {
 

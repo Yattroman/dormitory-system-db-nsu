@@ -35,10 +35,11 @@ export default function NavBar() {
                             <Nav.Link as={Link} to={"/profile"}>Profile</Nav.Link>
                         </> : null
                     }
-                    {showDormitoryManagerBoard ?
+                    {!showDormitoryManagerBoard ?
                         <>
                             <NavDropdown title="Dormitory Manager" id="basic-nav-dropdown">
-                                <NavDropdown.Item as={Link} to="/dormitory">Get Dormitory Info</NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/dormitory/third/rooms">Get Dormitory Rooms</NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/dormitory/third/furniture/add">Add Furniture</NavDropdown.Item>
                             </NavDropdown>
                         </> : null
                     }

@@ -7,12 +7,15 @@ const getDefaultUserInfo = () => {
     return axios.get( url, {headers: AuthHeader()});
 };
 
-const getDormitoryManagerBoard = () => {
-    return axios.get( url, {headers: AuthHeader()});
-}
+const getUserDetailsInfoByNickname = (nickname) => {
+    return axios.get( url + nickname, {
+        headers: AuthHeader()
+    });
+};
 
 const UserService = {
     getDefaultUserInfo,
+    getUserDetailsInfoByNickname
 };
 
 export default UserService;

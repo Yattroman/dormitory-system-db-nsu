@@ -10,11 +10,12 @@ import ru.nsu.yattroman.dormsys.exceptions.UserAlreadyExistException;
 import ru.nsu.yattroman.dormsys.repository.DormitoryManagerRepository;
 import ru.nsu.yattroman.dormsys.repository.RoleRepository;
 import ru.nsu.yattroman.dormsys.repository.UserRepository;
+import ru.nsu.yattroman.dormsys.service.inerfaces.IUserService;
 
 import java.util.Collections;
 
 @Service
-public class UserService implements IUserService{
+public class UserService implements IUserService {
 
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
@@ -53,8 +54,6 @@ public class UserService implements IUserService{
         var role = roleRepository.findByName("ROLE_USER");
 
         user.setRoles(Collections.singletonList(role));
-
-        System.out.println(user);
 
         return userRepository.save(user);
     }

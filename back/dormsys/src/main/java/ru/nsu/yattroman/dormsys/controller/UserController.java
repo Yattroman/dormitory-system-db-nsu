@@ -3,11 +3,9 @@ package ru.nsu.yattroman.dormsys.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.nsu.yattroman.dormsys.DTO.UserDto;
 import ru.nsu.yattroman.dormsys.mapper.UserMapper;
 import ru.nsu.yattroman.dormsys.security.JwtTokenUtil;
-import ru.nsu.yattroman.dormsys.service.IUserService;
-import ru.nsu.yattroman.dormsys.service.UserService;
+import ru.nsu.yattroman.dormsys.service.inerfaces.IUserService;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -45,4 +43,20 @@ public class UserController {
                 .body(userService.getDormitoryManagerInfo(user.getId()));
     }
 
+    @GetMapping(value = "/{nickname}")
+    public ResponseEntity<?> getUserDetailsByNickname(@PathVariable String nickname){
+
+        var user = userService.loadUserByNickname(nickname);
+
+        if(user == null){
+            return ResponseEntity
+                    .badRequest()
+                    .body("No user with this nickname found");
+        }
+
+        return ResponseEntity
+                .ok()
+                .body(userMapper.toDTO(user));
     }
+
+}

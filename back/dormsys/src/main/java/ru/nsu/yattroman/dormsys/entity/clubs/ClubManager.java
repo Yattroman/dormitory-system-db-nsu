@@ -1,15 +1,20 @@
 package ru.nsu.yattroman.dormsys.entity.clubs;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import ru.nsu.yattroman.dormsys.entity.User;
 
+@Entity
 public class ClubManager {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "club_manager_id")
     private Long id;
+
+    @OneToOne
+    @MapsId
+    private User user;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private Club club;
 
 }

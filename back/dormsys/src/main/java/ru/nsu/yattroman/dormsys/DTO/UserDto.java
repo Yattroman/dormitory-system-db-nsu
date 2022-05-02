@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class UserDto implements DTO{
 
+    private Long id;
     private String nickname;
     private String firstName;
     private String middleName;
