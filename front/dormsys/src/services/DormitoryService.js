@@ -45,7 +45,7 @@ const removeFurnitureFromRoom = (furnitureId) => {
         });
 }
 
-const getRoomsGallery = (dormitoryName, page, size) => {
+const getRoomsPage = (dormitoryName, page, size) => {
     return axios
         .get(url + dormitoryName + "/rooms", {
             headers: AuthHeader(),
@@ -89,7 +89,7 @@ const addFurniture = (name, innerCode, category) => {
 }
 
 const DormitoryService = {
-    getRoomsGallery,
+    getRoomsPage,
     getRoomDetails,
     getInhabitantDetailsByNickname,
     getFurnitureDetailsByInnerNumber,

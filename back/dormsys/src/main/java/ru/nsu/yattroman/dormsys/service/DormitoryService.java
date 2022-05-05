@@ -43,6 +43,8 @@ public class DormitoryService implements IDormitoryService {
             return false;
         }
 
+        // TODO: check if room isn't necessary
+
         var inhabitant = createInhabitantInfo(user, room, daysToLive);
         user.setInhabitant(inhabitant);
 
@@ -63,7 +65,9 @@ public class DormitoryService implements IDormitoryService {
         inhabitantInfo.setContract(contract);
         inhabitantInfo.setRoom(room);
         inhabitantInfo.setUser(user);
-        // TODO add achievements and offenses
+        // TODO: add achievements and offenses
+
+        // TODO: add role ROLE_INHABITANT
 
         contract.setInhabitant(inhabitantInfo);
         user.setInhabitant(inhabitantInfo);
@@ -133,7 +137,7 @@ public class DormitoryService implements IDormitoryService {
     }
 
     @Override
-    public Page<Room> showAllDormitoryRooms(Dormitory dormitory, Pageable pageable) {
+    public Page<Room> showDormitoryRoomsPage(Dormitory dormitory, Pageable pageable) {
         return roomRepository.findRoomsByDormitory(dormitory, pageable);
     }
 

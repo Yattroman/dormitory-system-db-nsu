@@ -1,15 +1,18 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { Container, Button, Row, Form} from "react-bootstrap";
 import DormitoryService from "../../services/DormitoryService";
+import ClubServive from "../../services/ClubService";
+import AuthService from "../../services/AuthService";
 
-export default function FurnitureAdd() {
+export default function ClubAdd() {
 
     const [message, setMessage] = useState("");
+    const user = AuthService.getCurrentUser();
 
     const [form, setForm] = useState({
-        innerCode: '',
         name: '',
-        category: '',
+        description: '',
+        uniqueName: '',
     })
 
     const handleChange = (e) => {
@@ -28,12 +31,11 @@ export default function FurnitureAdd() {
 
         e.preventDefault();
 
-        console.log(form.name + ' ' + form.innerCode + ' ' + form.category);
-
-        DormitoryService.addFurniture(
+        ClubServive.addClub(
             form.name,
-            form.innerCode,
-            form.category
+            form.description,
+            form.uniqueName,
+            user.userId
         ).then(
             (response) => {
                 setMessage(response.data.message);
@@ -51,9 +53,9 @@ export default function FurnitureAdd() {
     return (
         <Container className="md mt-3 d-flex justify-content-center">
             <Form className="col col-8">
-                <Row className="mb-3 justify-content-center">
+                <Row className="mb-1 justify-content-center">
                     <Form.Group controlId="nameId" className="col col-sm-4">
-                        <Form.Label>Name</Form.Label>
+                        <Form.Label>Club name</Form.Label>
                         <Form.Control
                             type = "text"
                             name = "name"
@@ -61,29 +63,32 @@ export default function FurnitureAdd() {
                             onChange={handleChange}
                         />
                     </Form.Group>
-                    <Form.Group controlId="innerCodeId" className="col col-sm-4">
-                        <Form.Label>Inner Code</Form.Label>
+                    <Form.Group controlId="uniqueNameId" className="col col-sm-4">
+                        <Form.Label>Unique name (short name)</Form.Label>
                         <Form.Control
                             type = "text"
-                            name = "innerCode"
-                            placeholder="Inner Code..."
+                            name = "uniqueName"
+                            placeholder="Unique name..."
                             onChange={handleChange}
                         />
                     </Form.Group>
-                    <Form.Group controlId="categoryId" className="col col-sm-4">
-                        <Form.Label>Category</Form.Label>
+                </Row>
+                <Row className="justify-content-center">
+                    <Form.Group controlId="descriptionId" className="col col-8">
+                        <Form.Label>Describe your club</Form.Label>
                         <Form.Control
-                            type = "text"
-                            name = "category"
-                            placeholder="Category..."
+                            as = "textarea"
+                            name = "description"
+                            placeholder="Description..."
+                            rows={4}
                             onChange={handleChange}
                         />
                     </Form.Group>
                 </Row>
                 <Row className="d-flex justify-content-center">
-                    <Button type="submit" className="me-4 col col-4 btn btn-success btn-lg btn-block m-1"
+                    <Button type="submit" className="mt-4 col col-3 btn btn-success btn-lg m-1"
                             onClick={handleSubmit}>
-                        Add Furniture
+                        Create Club
                     </Button>
                 </Row>
             </Form>

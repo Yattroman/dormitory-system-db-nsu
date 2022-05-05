@@ -8,9 +8,10 @@ import ru.nsu.yattroman.dormsys.DTO.DTO;
 @NoArgsConstructor
 public class ClubDto implements DTO {
 
+    private Long id;
     private String name;
     private String description;
     private String uniqueName;
-//    private ClubManagerDto clubManagerDto;
+    private ClubManagerDto clubManager;
 
 }

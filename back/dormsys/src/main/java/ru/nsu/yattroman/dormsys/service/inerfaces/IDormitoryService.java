@@ -21,7 +21,7 @@ public interface IDormitoryService {
     Room showRoomDetails(Long roomId);
     Inhabitant showInhabitantDetailsByNickname(String nickname);
     Furniture showFurnitureDetailsByInnerCode(String innerCode);
-    Page<Room> showAllDormitoryRooms(Dormitory dormitory, Pageable pageable);
+    Page<Room> showDormitoryRoomsPage(Dormitory dormitory, Pageable pageable);
     Dormitory loadDormitoryByName(String name);
 
 }

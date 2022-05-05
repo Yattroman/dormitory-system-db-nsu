@@ -26,13 +26,10 @@ public class Club {
     // TODO: add photo
     // TODO: add meetings time
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     private ClubManager clubManager;
 
-    @ManyToMany
-    @JoinTable(name = "club_events",
-            joinColumns = @JoinColumn(name = "club_id"),
-            inverseJoinColumns = @JoinColumn(name = "event_id"))
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Event> events;
 
     @ManyToMany

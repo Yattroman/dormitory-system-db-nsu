@@ -6,6 +6,7 @@ import {Container, Nav, Navbar, NavDropdown, NavLink} from "react-bootstrap";
 export default function NavBar() {
 
     const [showDormitoryManagerBoard, setShowDormitoryManagerBoard] = useState(false);
+    const [showClubManagerBoard, setShowClubManagerBoard] = useState(false);
     const [currentUser, setCurrentUser] = useState(undefined);
     const navigate = useNavigate();
 
@@ -33,12 +34,25 @@ export default function NavBar() {
                     {currentUser ?
                         <>
                             <Nav.Link as={Link} to={"/profile"}>Profile</Nav.Link>
+                            <NavDropdown title="Clubs" id="basic-nav-dropdown">
+                                <NavDropdown.Item as={Link} to="/leisure/clubs">All Clubs</NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/leisure/clubs/my">My Clubs</NavDropdown.Item>
+                                <NavDropdown.Divider/>
+                                <NavDropdown.Item as={Link} to="/leisure/club/add">Create Club</NavDropdown.Item>
+                            </NavDropdown>
+                            <NavDropdown title="Events" id="basic-nav-dropdown">
+                                <NavDropdown.Item as={Link} to="/leisure/events">All Events</NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/leisure/events/my">My Events</NavDropdown.Item>
+                                <NavDropdown.Divider/>
+                                <NavDropdown.Item as={Link} to="/leisure/event/add">Create Event</NavDropdown.Item>
+                            </NavDropdown>
                         </> : null
                     }
-                    {!showDormitoryManagerBoard ?
+                    {showDormitoryManagerBoard ?
                         <>
                             <NavDropdown title="Dormitory Manager" id="basic-nav-dropdown">
                                 <NavDropdown.Item as={Link} to="/dormitory/third/rooms">Get Dormitory Rooms</NavDropdown.Item>
+                                <NavDropdown.Divider/>
                                 <NavDropdown.Item as={Link} to="/dormitory/third/furniture/add">Add Furniture</NavDropdown.Item>
                             </NavDropdown>
                         </> : null

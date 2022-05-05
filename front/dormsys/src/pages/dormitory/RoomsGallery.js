@@ -22,15 +22,13 @@ export default function RoomsGallery() {
     });
 
     function getRoomsInfoData(){
-        DormitoryService.getRoomsGallery(dormitoryName, pagesState.currentPage-1, pagesState.pageSize).then(
+        DormitoryService.getRoomsPage(dormitoryName, pagesState.currentPage-1, pagesState.pageSize).then(
             (response) => {
-                console.log("For paginator: " + pagesState.currentPage-1);
                 setRooms(response.data.rooms);
                 setPagesState({...pagesState,
                     currentPage: response.data.currentPage + 1,
                     totalPages: response.data.totalPages
                 });
-                console.log("Total pages: " + response.data.totalPages);
             },
             (error) => {
                 const msg = (error.response && error.response.data) || error.message ||error.toString();
@@ -40,12 +38,10 @@ export default function RoomsGallery() {
     }
 
     useEffect(() => {
-        console.log("Updated: " + pagesState.currentPage);
         getRoomsInfoData();
     }, [pagesState.currentPage]);
 
     const handlePageChange = (currentPage) => {
-        console.log("Value to change: " + currentPage);
         setPagesState({...pagesState, currentPage: currentPage });
     }
 
@@ -57,7 +53,6 @@ export default function RoomsGallery() {
         return (
             <Grid item md={3} key={roomInfo.id}>
                 <MDBCard>
-                    {/*<Card.Img variant="top" src="..." alt="Text" />*/}
                     <MDBCardBody>
                         <MDBCardHeader className="text-center"><h3>{roomInfo.roomNumber}</h3></MDBCardHeader>
                         <MDBCardText className="p-2">
@@ -67,7 +62,6 @@ export default function RoomsGallery() {
                         </MDBCardText>
                         <MDBBtnGroup className="d-flex align-items-center">
                             <MDBBtn color="dark" onClick={(e) => handleRoomShow(roomInfo.id)}>View</MDBBtn>
-                            {/*<MDBBtn color="dark">Edit</MDBBtn>*/}
                         </MDBBtnGroup>
                     </MDBCardBody>
                 </MDBCard>

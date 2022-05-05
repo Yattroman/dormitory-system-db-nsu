@@ -22,8 +22,7 @@ public class ClubMapper implements Mapper<Club, ClubDto> {
     @Override
     public Club toEntity(ClubDto dto) {
         var club = modelMapper.map(dto, Club.class);
-//        club.setClubManager(clubService.getClubManager(dto.getClubManagerId()));
-        // Add club manager
+        club.setClubManager(null);
         return club;
     }
 

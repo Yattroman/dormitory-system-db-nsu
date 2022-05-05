@@ -4,21 +4,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import ru.nsu.yattroman.dormsys.entity.User;
 import ru.nsu.yattroman.dormsys.entity.clubs.Club;
 import ru.nsu.yattroman.dormsys.entity.clubs.ClubManager;
 import ru.nsu.yattroman.dormsys.repository.ClubManagerRepository;
 import ru.nsu.yattroman.dormsys.repository.ClubRepository;
+import ru.nsu.yattroman.dormsys.repository.UserRepository;
 import ru.nsu.yattroman.dormsys.service.inerfaces.IClubService;
 
 @Service
 public class ClubService implements IClubService {
 
     private final ClubRepository clubRepository;
+    private final UserRepository userRepository;
     private final ClubManagerRepository clubManagerRepository;
 
     @Autowired
-    public ClubService(ClubRepository clubRepository, ClubManagerRepository clubManagerRepository) {
+    public ClubService(ClubRepository clubRepository, UserRepository userRepository, ClubManagerRepository clubManagerRepository) {
         this.clubRepository = clubRepository;
+        this.userRepository = userRepository;
         this.clubManagerRepository = clubManagerRepository;
     }
 
@@ -29,7 +33,7 @@ public class ClubService implements IClubService {
 
         if(existingClub != null){
             // send exception furniture is already exists
-            return null;
+           return null;
         }
 
         return clubRepository.save(club);
@@ -46,7 +50,33 @@ public class ClubService implements IClubService {
     }
 
     @Override
-    public Page<Club> showAllClubs(Pageable pageable) {
+    public void setClubManagerToClub(Club club, Long clubManagerId) {
+        var clubManager = clubManagerRepository.findClubManagerById(clubManagerId);
+        var user = userRepository.findUserById(clubManagerId);
+
+        if(clubManager == null){
+            clubManager = createClubManagerInfo(user);
+        }
+
+        club.setClubManager(clubManager);
+        clubRepository.save(club);
+    }
+
+    private ClubManager createClubManagerInfo(User user){
+        var clubManagerInfo = new ClubManager();
+        clubManagerInfo.setUser(user);
+        user.setClubManager(clubManagerInfo);
+
+        // TODO: add role ROLE_CLUB_MANAGER
+
+        clubManagerRepository.save(clubManagerInfo);
+        userRepository.save(user);
+
+        return clubManagerInfo;
+    }
+
+    @Override
+    public Page<Club> showClubsPage(Pageable pageable) {
         return clubRepository.findAll(pageable);
     }
 

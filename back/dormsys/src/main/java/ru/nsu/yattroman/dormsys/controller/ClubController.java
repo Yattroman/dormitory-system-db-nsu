@@ -31,7 +31,9 @@ public class ClubController {
     public ResponseEntity<?> addClub(@RequestBody ClubDto clubDto){
 
         var club = clubMapper.toEntity(clubDto);
-        clubService.addClub(club);
+
+        //clubService.addClub(club);
+        //clubService.setClubManagerToClub(club, clubDto.getClubManager().getId());
 
         return ResponseEntity
                 .ok()
@@ -59,7 +61,7 @@ public class ClubController {
                                        @RequestParam(defaultValue = "10") int size){
 
         Pageable paging = PageRequest.of(page, size);
-        var resultPage = clubService.showAllClubs(paging);
+        var resultPage = clubService.showClubsPage(paging);
 
         var clubs = resultPage.getContent().stream()
                 .map(clubMapper::toDTO).collect(Collectors.toList());

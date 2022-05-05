@@ -75,13 +75,13 @@ public class DormitoryController {
 
         Pageable pagingWithAscSortByRoomNumber = PageRequest.of(page, size, Sort.by("roomNumber").ascending());
         var dormitory = dormitoryService.loadDormitoryByName(dormitoryName);
-        var resultPage = dormitoryService.showAllDormitoryRooms(dormitory, pagingWithAscSortByRoomNumber);
+        var resultPage = dormitoryService.showDormitoryRoomsPage(dormitory, pagingWithAscSortByRoomNumber);
 
-        var roomsDto = resultPage.getContent().stream()
+        var rooms = resultPage.getContent().stream()
                 .map(roomMapper::toDTO).collect(Collectors.toList());
 
         HashMap<String, Object> response = new HashMap<>();
-        response.put("rooms", roomsDto);
+        response.put("rooms", rooms);
         response.put("currentPage", resultPage.getNumber());
         response.put("totalItems", resultPage.getTotalElements());
         response.put("totalPages", resultPage.getTotalPages());

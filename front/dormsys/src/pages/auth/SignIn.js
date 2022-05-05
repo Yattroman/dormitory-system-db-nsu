@@ -48,7 +48,7 @@ export default function SignIn() {
     }
 
     return (
-        <Container className="md mt-3 d-flex justify-content-center">
+        <Container className="md mt-3 d-flex justify-content-center align-items-center h-100">
             <MDBCard className="p-4">
                 <MDBCardImage
                     src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"

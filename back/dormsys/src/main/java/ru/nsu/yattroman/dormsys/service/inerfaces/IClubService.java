@@ -9,8 +9,9 @@ public interface IClubService {
 
     Club addClub(Club club);
     Club showClubDetails(Long clubId);
-    Page<Club> showAllClubs(Pageable pageable);
+    Page<Club> showClubsPage(Pageable pageable);
     ClubManager showClubManagerDetails(Long clubManagerId);
+    void setClubManagerToClub(Club club, Long clubManagerId);
     void subscribeUserToClub(Long clubId, Long userId);
     void unsubscribeUserFromClub(Long clubId, Long userId);
 
