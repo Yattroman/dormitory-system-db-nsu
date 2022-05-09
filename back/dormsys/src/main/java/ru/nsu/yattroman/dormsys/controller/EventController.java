@@ -1,16 +1,19 @@
 package ru.nsu.yattroman.dormsys.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.nsu.yattroman.dormsys.DTO.EventDto;
-import ru.nsu.yattroman.dormsys.DTO.club.ClubDto;
+import ru.nsu.yattroman.dormsys.controller.request.EventEnrollRequest;
+import ru.nsu.yattroman.dormsys.entity.Event;
 import ru.nsu.yattroman.dormsys.mapper.EventMapper;
 import ru.nsu.yattroman.dormsys.service.EventService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -27,12 +30,12 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @PostMapping(value = "event")
+    @PostMapping(value = "event/club")
     public ResponseEntity<?> addEvent(@RequestBody EventDto eventDto){
 
+        System.out.println(eventDto.toString());
         var event = eventMapper.toEntity(eventDto);
-//        eventService.addEventByClub(event, eventDto.getClub().getId());
-        eventService.addEventByClub(event, 290L);
+        eventService.addEventByClub(event, event.getClub().getId());
 
         return ResponseEntity
                 .ok()
@@ -77,4 +80,69 @@ public class EventController {
                 .body(response);
     }
 
+    @PostMapping("event/participant")
+    public ResponseEntity<?> enrollToEvent(@RequestBody EventEnrollRequest request){
+
+        eventService.enrollUserToEvent(request.getEventId(), request.getUserId());
+
+        return ResponseEntity
+                .ok()
+                .body("User successfully enrolled to event");
+    }
+
+    @DeleteMapping("event/participant")
+    public ResponseEntity<?> unenrollFromEvent(HttpServletRequest request){
+        var eventId = request.getParameter("eventId");
+        var userId = request.getParameter("userId");
+
+        eventService.unenrollUserFromEvent(Long.parseLong(eventId), Long.parseLong(userId));
+
+        return ResponseEntity
+                .ok()
+                .body("User successfully unenrolled from event");
+    }
+
+    private HashMap<?, ?> wrapEventsToResponse(List<Event> events){
+        var userEvents = events.stream().map(eventMapper::toDTO).collect(Collectors.toList());
+
+        HashMap<String, Object> response = new HashMap<>();
+
+        response.put("events", userEvents);
+        response.put("eventsNumber", userEvents.size());
+
+        return response;
+    }
+
+    @GetMapping("events/user")
+    public ResponseEntity<?> getEventsByUser(HttpServletRequest request){
+        var userId = request.getParameter("userId");
+
+        var response = wrapEventsToResponse(eventService.getEventsByUser(Long.parseLong(userId)));
+
+        return ResponseEntity
+                .ok()
+                .body(response);
+    }
+
+    @GetMapping("events/club")
+    public ResponseEntity<?> getEventsByClub(HttpServletRequest request){
+        var userId = request.getParameter("clubId");
+
+        var response = wrapEventsToResponse(eventService.getEventsByClub(Long.parseLong(userId)));
+
+        return ResponseEntity
+                .ok()
+                .body(response);
+    }
+
+    @GetMapping("events/club/upcoming")
+    public ResponseEntity<?> getUpcomingEventsByClub(HttpServletRequest request){
+        var userId = request.getParameter("clubId");
+
+        var response = wrapEventsToResponse(eventService.getUpcomingEventsByClub(Long.parseLong(userId)));
+
+        return ResponseEntity
+                .ok()
+                .body(response);
+    }
 }

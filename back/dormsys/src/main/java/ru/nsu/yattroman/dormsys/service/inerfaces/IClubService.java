@@ -5,6 +5,8 @@ import org.springframework.data.domain.Pageable;
 import ru.nsu.yattroman.dormsys.entity.clubs.Club;
 import ru.nsu.yattroman.dormsys.entity.clubs.ClubManager;
 
+import java.util.List;
+
 public interface IClubService {
 
     Club addClub(Club club);
@@ -14,5 +16,7 @@ public interface IClubService {
     void setClubManagerToClub(Club club, Long clubManagerId);
     void subscribeUserToClub(Long clubId, Long userId);
     void unsubscribeUserFromClub(Long clubId, Long userId);
+    List<Club> getClubsByUser(Long userId);
+    List<Club> getClubsByClubManager(Long clubManagerId);
 
 }

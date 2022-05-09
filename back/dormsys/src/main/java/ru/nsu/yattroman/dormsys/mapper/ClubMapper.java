@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.nsu.yattroman.dormsys.DTO.club.ClubDto;
 import ru.nsu.yattroman.dormsys.entity.clubs.Club;
+import ru.nsu.yattroman.dormsys.entity.clubs.ClubManager;
 import ru.nsu.yattroman.dormsys.service.inerfaces.IClubService;
 
 @Component
@@ -22,7 +23,7 @@ public class ClubMapper implements Mapper<Club, ClubDto> {
     @Override
     public Club toEntity(ClubDto dto) {
         var club = modelMapper.map(dto, Club.class);
-        club.setClubManager(null);
+        club.setClubManager(new ClubManager(dto.getClubManager().getId()));
         return club;
     }
 

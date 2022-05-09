@@ -1,17 +1,20 @@
 package ru.nsu.yattroman.dormsys.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.nsu.yattroman.dormsys.DTO.club.ClubDto;
+import ru.nsu.yattroman.dormsys.controller.request.ClubSubscribeRequest;
+import ru.nsu.yattroman.dormsys.entity.Event;
+import ru.nsu.yattroman.dormsys.entity.clubs.Club;
 import ru.nsu.yattroman.dormsys.mapper.ClubMapper;
-import ru.nsu.yattroman.dormsys.service.ClubService;
 import ru.nsu.yattroman.dormsys.service.inerfaces.IClubService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -32,8 +35,7 @@ public class ClubController {
 
         var club = clubMapper.toEntity(clubDto);
 
-        //clubService.addClub(club);
-        //clubService.setClubManagerToClub(club, clubDto.getClubManager().getId());
+        clubService.addClub(club);
 
         return ResponseEntity
                 .ok()
@@ -78,4 +80,56 @@ public class ClubController {
                 .body(response);
     }
 
+    @PostMapping("club/participant")
+    public ResponseEntity<?> subscribeToClub(@RequestBody ClubSubscribeRequest request){
+
+        clubService.subscribeUserToClub(request.getClubId(), request.getUserId());
+
+        return ResponseEntity
+                .ok()
+                .body("Use successfully subscribed to club");
+    }
+
+    @DeleteMapping("club/participant")
+    public ResponseEntity<?> unsubscribeFromClub(HttpServletRequest request){
+        var clubId = request.getParameter("clubId");
+        var userId = request.getParameter("userId");
+
+        clubService.unsubscribeUserFromClub(Long.parseLong(clubId), Long.parseLong(userId));
+
+        return ResponseEntity
+                .ok()
+                .body("Use successfully unsubscribed from club");
+    }
+
+    private HashMap<?, ?> wrapClubsToResponse(List<Club> clubs){
+        var userClubs = clubs.stream().map(clubMapper::toDTO).collect(Collectors.toList());
+
+        HashMap<String, Object> response = new HashMap<>();
+
+        response.put("clubs", userClubs);
+        response.put("clubsNumber", userClubs.size());
+
+        return response;
+    }
+
+    @GetMapping("clubs/user")
+    public ResponseEntity<?> getClubsByUser(HttpServletRequest request){
+        var userId = request.getParameter("userId");
+        var response = wrapClubsToResponse(clubService.getClubsByUser(Long.parseLong(userId)));
+
+        return ResponseEntity
+                .ok()
+                .body(response);
+    }
+
+    @GetMapping("clubs/managing")
+    public ResponseEntity<?> getUserManagingClubs(HttpServletRequest request){
+        var userId = request.getParameter("userId");
+        var response = wrapClubsToResponse(clubService.getClubsByClubManager(Long.parseLong(userId)));
+
+        return ResponseEntity
+                .ok()
+                .body(response);
+    }
 }

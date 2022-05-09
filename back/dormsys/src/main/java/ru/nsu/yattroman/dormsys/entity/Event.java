@@ -7,6 +7,7 @@ import ru.nsu.yattroman.dormsys.entity.clubs.Club;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -14,7 +15,7 @@ import java.util.List;
 public class Event {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     private String name;
@@ -22,7 +23,7 @@ public class Event {
     private String description;
 
     @ManyToMany(mappedBy = "events")
-    private List<User> participants;
+    private Set<User> participants;
 
     @Column(name = "take_time")
     @Temporal(TemporalType.DATE)

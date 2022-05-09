@@ -35,9 +35,54 @@ const getClubsPage = (page, size) => {
         });
 }
 
+const subscribeToClub = (userId, clubId) => {
+    return axios
+        .post(url + "club/participant", {
+            userId: userId,
+            clubId: clubId
+        }, {
+            headers: AuthHeader(),
+        });
+}
+
+const unsubscribeFromClub = (userId, clubId) => {
+    return axios
+        .delete(url + "club/participant",  {
+            headers: AuthHeader(),
+            params: {
+                userId: userId,
+                clubId: clubId
+            }
+        });
+}
+
+const getUserSubscribedClubs = (userId) => {
+    return axios
+        .get(url + "clubs/user",  {
+            headers: AuthHeader(),
+            params: {
+                userId: userId,
+            }
+        });
+}
+
+const getUserManagingClubs = (userId) => {
+    return axios
+        .get(url + "clubs/managing",  {
+            headers: AuthHeader(),
+            params: {
+                userId: userId,
+            }
+        });
+}
+
 const ClubService = {
     getClubDetails,
     getClubsPage,
+    subscribeToClub,
+    unsubscribeFromClub,
+    getUserSubscribedClubs,
+    getUserManagingClubs,
     addClub
 };
 

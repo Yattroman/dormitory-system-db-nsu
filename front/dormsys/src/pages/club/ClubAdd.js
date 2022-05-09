@@ -20,15 +20,6 @@ export default function ClubAdd() {
     }
 
     const handleSubmit = (e) => {
-        const config = {
-            headers: {
-                'Access-Control-Allow-Origin':'*',
-                'Access-Control-Allow-Methods': 'POST, GET',
-                'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-                'Content-Type': 'application/json',
-            }
-        }
-
         e.preventDefault();
 
         ClubServive.addClub(
@@ -51,9 +42,10 @@ export default function ClubAdd() {
     }
 
     return (
-        <Container className="md mt-3 d-flex justify-content-center">
+        <Container className="md mt-5 d-flex justify-content-center">
             <Form className="col col-8">
-                <Row className="mb-1 justify-content-center">
+                <h2 className="text-center">Create your own club</h2>
+                <Row className="mt-3 mb-1 justify-content-center">
                     <Form.Group controlId="nameId" className="col col-sm-4">
                         <Form.Label>Club name</Form.Label>
                         <Form.Control

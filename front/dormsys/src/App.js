@@ -14,6 +14,7 @@ import ClubInfo from "./pages/club/ClubInfo";
 import EventAdd from "./pages/event/EventAdd";
 import MyClubs from "./pages/club/MyClubs";
 import MyEvents from "./pages/event/MyEvents";
+import AllClubs from "./pages/club/AllClubs";
 
 
 export default function App()  {
@@ -32,7 +33,7 @@ export default function App()  {
                         <Route path = "furniture/add" element={<FurnitureAdd />}/>
                     </Route>
                     <Route path="leisure/">
-                        <Route path = "clubs" element={<ClubAdd/>}/>
+                        <Route path = "clubs" element={<AllClubs/>}/>
                         <Route path = "clubs/my" element={<MyClubs/>}/>
                         <Route path = "club/:id" element={<ClubInfo/>}/>
                         <Route path = "club/add" element={<ClubAdd/>}/>

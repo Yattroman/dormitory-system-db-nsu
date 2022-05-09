@@ -4,6 +4,7 @@ spring:
     username: univeradm
     password: password
     driver-class-name: org.postgresql.Driver
+
   jpa:
     hibernate:
       ddl-auto: create
@@ -13,6 +14,11 @@ spring:
       hibernate:
         validator:
           apply-to-ddl: true
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+      encoding: UTF-8
 
 app:
   security:

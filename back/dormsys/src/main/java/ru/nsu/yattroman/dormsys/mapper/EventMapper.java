@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.nsu.yattroman.dormsys.DTO.EventDto;
 import ru.nsu.yattroman.dormsys.entity.Event;
+import ru.nsu.yattroman.dormsys.entity.clubs.Club;
+import ru.nsu.yattroman.dormsys.entity.clubs.ClubManager;
 
 @Component
 public class EventMapper implements Mapper<Event, EventDto>{
@@ -18,7 +20,9 @@ public class EventMapper implements Mapper<Event, EventDto>{
 
     @Override
     public Event toEntity(EventDto dto) {
-        return modelMapper.map(dto, Event.class);
+        var event = modelMapper.map(dto, Event.class);
+        event.setClub(new Club(dto.getClub().getId()));
+        return event;
     }
 
     @Override

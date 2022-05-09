@@ -94,6 +94,10 @@ public class DormitoryController {
     @PostMapping(value = "room/inhabitant")
     public ResponseEntity<?> addInhabitantIntoRoom(@RequestBody InhabitantRequest request){
 
+        if(request == null){
+            return ResponseEntity.badRequest().body("Invalid request");
+        }
+
         var result = dormitoryService.addInhabitantIntoRoom(request.getRoomId(), request.getUserId(), request.getDaysToLive());
 
         // Create exception which means that roomId or userId isn't correct
@@ -125,6 +129,10 @@ public class DormitoryController {
 
     @PostMapping(value = "room/furniture")
     public ResponseEntity<?> addFurnitureIntoRoom(@RequestBody FurnitureRequest request){
+
+        if(request == null){
+            return ResponseEntity.badRequest().body("Invalid request");
+        }
 
         dormitoryService.addFurnitureIntoRoom(request.getRoomId(), request.getFurnitureId());
 

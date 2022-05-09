@@ -2,6 +2,8 @@ package ru.nsu.yattroman.dormsys.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import ru.nsu.yattroman.dormsys.mapper.UserMapper;
 import ru.nsu.yattroman.dormsys.security.JwtTokenUtil;
@@ -24,9 +26,10 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<?> getUserInfo(@RequestHeader(name="Authorization") String token) {
-        var userNickname = tokenUtil.getUsernameFromToken(token);
-        var user = userService.loadUserByNickname(userNickname);
+    public ResponseEntity<?> getUserInfo() {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        var userDetails = (UserDetails) authentication.getPrincipal();
+        var user = userService.loadUserByNickname(userDetails.getUsername());
 
         return ResponseEntity
                 .ok()

@@ -11,6 +11,9 @@ import ru.nsu.yattroman.dormsys.repository.ClubManagerRepository;
 import ru.nsu.yattroman.dormsys.repository.ClubRepository;
 import ru.nsu.yattroman.dormsys.repository.UserRepository;
 import ru.nsu.yattroman.dormsys.service.inerfaces.IClubService;
+import ru.nsu.yattroman.dormsys.util.Connect;
+
+import java.util.List;
 
 @Service
 public class ClubService implements IClubService {
@@ -36,17 +39,36 @@ public class ClubService implements IClubService {
            return null;
         }
 
+        setClubManagerToClub(club, club.getClubManager().getId());
+
         return clubRepository.save(club);
+    }
+
+    private void manipulateUserAndClubConnection(Long clubId, Long userId, Connect connection){
+        var club = clubRepository.findClubById(clubId);
+        var user = userRepository.findUserById(userId);
+
+        if(user == null || club == null){
+            //TODO: add exception no club or user
+            return;
+        }
+
+        if(connection.equals(Connect.CONNECT)){
+            user.addClub(club);
+        } else if(connection.equals(Connect.DISCONNECT)){
+            user.removeClub(club);
+        }
+        userRepository.save(user);
     }
 
     @Override
     public void subscribeUserToClub(Long clubId, Long userId) {
-
+        manipulateUserAndClubConnection(clubId, userId, Connect.CONNECT);
     }
 
     @Override
     public void unsubscribeUserFromClub(Long clubId, Long userId) {
-
+        manipulateUserAndClubConnection(clubId, userId, Connect.DISCONNECT);
     }
 
     @Override
@@ -88,5 +110,15 @@ public class ClubService implements IClubService {
     @Override
     public ClubManager showClubManagerDetails(Long clubManagerId) {
         return clubManagerRepository.findClubManagerById(clubManagerId);
+    }
+
+    @Override
+    public List<Club> getClubsByUser(Long userId) {
+        return clubRepository.findClubsByParticipantsId(userId);
+    }
+
+    @Override
+    public List<Club> getClubsByClubManager(Long clubManagerId) {
+        return clubRepository.findClubsByClubManager_Id(clubManagerId);
     }
 }

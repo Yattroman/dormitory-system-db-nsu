@@ -17,12 +17,10 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NonNull
-    @Column(name = "room_number")
+    @Column(name = "room_number", nullable = false)
     private String roomNumber;
 
-    @NonNull
-    @Column(name = "beds_number")
+    @Column(name = "beds_number", nullable = false)
     private int bedsNumber;
 
     @ManyToOne(cascade = CascadeType.ALL)

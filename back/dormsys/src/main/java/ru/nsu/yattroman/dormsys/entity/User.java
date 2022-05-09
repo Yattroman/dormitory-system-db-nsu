@@ -11,6 +11,7 @@ import ru.nsu.yattroman.dormsys.util.Gender;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Setter
@@ -20,7 +21,7 @@ import java.util.Date;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @NonNull
@@ -54,13 +55,13 @@ public class User {
     @JoinTable(name = "users_events",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id"))
-    private Collection<Event> events;
+    private Set<Event> events;
 
     @ManyToMany
     @JoinTable(name = "users_clubs",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "club_id"))
-    private Collection<Club> clubs;
+    private Set<Club> clubs;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
@@ -73,5 +74,24 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST})
     @PrimaryKeyJoinColumn
     private Inhabitant inhabitant;
+
+    public void addClub(Club club){
+        clubs.add(club);
+        club.getParticipants().add(this);
+    }
+
+    public void removeClub(Club club) {
+        clubs.removeIf(c -> c.getId().equals(club.getId()));
+    }
+
+    public void addEvent(Event event){
+        events.add(event);
+        event.getParticipants().add(this);
+    }
+
+    public void removeEvent(Event event) {
+        events.removeIf(c -> c.getId().equals(event.getId()));
+    }
+
 
 }
