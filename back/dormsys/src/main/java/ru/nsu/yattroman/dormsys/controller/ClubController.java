@@ -60,7 +60,7 @@ public class ClubController {
 
     @GetMapping("clubs")
     public ResponseEntity<?> showClubs(@RequestParam(defaultValue = "0") int page,
-                                       @RequestParam(defaultValue = "10") int size){
+                                       @RequestParam(defaultValue = "6") int size){
 
         Pageable paging = PageRequest.of(page, size);
         var resultPage = clubService.showClubsPage(paging);
@@ -131,5 +131,12 @@ public class ClubController {
         return ResponseEntity
                 .ok()
                 .body(response);
+    }
+
+    @GetMapping("clubs/top/{n}")
+    public ResponseEntity<?> getTopPopularClubs(@PathVariable int n){
+        return ResponseEntity
+                .ok()
+                .body(clubService.getTopPopularClubs(n));
     }
 }

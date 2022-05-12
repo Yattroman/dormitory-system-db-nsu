@@ -9,7 +9,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class EventDto implements DTO{
-
     private Long id;
     private String name;
     private String location;
@@ -18,5 +17,4 @@ public class EventDto implements DTO{
 
     private List<UserDto> participants;
     private ClubDto club;
-
 }

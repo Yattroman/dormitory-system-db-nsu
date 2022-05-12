@@ -1,6 +1,7 @@
 import {Container, Row} from "react-bootstrap";
 import UserService from "../services/UserService";
 import {useEffect, useState} from "react";
+import MyClubs from "./club/MyClubs";
 
 export default function Profile() {
 
@@ -18,13 +19,13 @@ export default function Profile() {
     }, []);
 
     return (
-        <section>
+        <section className="bg-light p-4">
+            <div className="d-block text-center">
+                <h2>Main profile information</h2>
+            </div>
             <Container>
                 <div>
-                    <div className="p-2 d-block bg-light text-center">
-                        <h1>Profile Info!</h1>
-                    </div>
-                    <div className="d-flex d-flex-row mt-5 justify-content-center">
+                    <div className="d-flex d-flex-row mt-4 align-items-center justify-content-center">
                         <div className="col col-3">
                             <ul>
                                 <li>Nickname: {userInfo.nickname}</li>
@@ -35,9 +36,7 @@ export default function Profile() {
                             </ul>
                         </div>
                         <div className="col col-3">
-                            <h2>
-                                place for photo...
-                            </h2>
+                            <img width={200} height={200} src="https://cdn-icons-png.flaticon.com/512/17/17004.png"/>
                         </div>
                     </div>
                 </div>

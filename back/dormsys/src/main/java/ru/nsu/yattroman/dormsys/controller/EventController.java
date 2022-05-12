@@ -39,7 +39,7 @@ public class EventController {
 
         return ResponseEntity
                 .ok()
-                .body("Club successfully added.");
+                .body("Event successfully added.");
     }
 
     @GetMapping(value = "event/{eventId}")
@@ -144,5 +144,12 @@ public class EventController {
         return ResponseEntity
                 .ok()
                 .body(response);
+    }
+
+    @GetMapping("events/top/{n}")
+    public ResponseEntity<?> getTopPopularEvents(@PathVariable int n){
+        return ResponseEntity
+                .ok()
+                .body(eventService.getTopPopularEvents(n));
     }
 }

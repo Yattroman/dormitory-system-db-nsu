@@ -76,6 +76,13 @@ const getUserManagingClubs = (userId) => {
         });
 }
 
+const getTopPopularClubs = (n) => {
+    return axios
+        .get(url + "clubs/top/" + n, {
+            headers: AuthHeader()
+        });
+}
+
 const ClubService = {
     getClubDetails,
     getClubsPage,
@@ -83,6 +90,7 @@ const ClubService = {
     unsubscribeFromClub,
     getUserSubscribedClubs,
     getUserManagingClubs,
+    getTopPopularClubs,
     addClub
 };
 

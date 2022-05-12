@@ -12,6 +12,13 @@ public class ClubDto implements DTO {
     private String name;
     private String description;
     private String uniqueName;
+    private Long participantsNumber;
     private ClubManagerDto clubManager;
 
+    public ClubDto(Long id, String name, String uniqueName, Long participantsNumber) {
+        this.id = id;
+        this.name = name;
+        this.uniqueName = uniqueName;
+        this.participantsNumber = participantsNumber;
+    }
 }

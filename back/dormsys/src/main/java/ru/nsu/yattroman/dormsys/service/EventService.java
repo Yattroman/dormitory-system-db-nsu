@@ -3,6 +3,7 @@ package ru.nsu.yattroman.dormsys.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import ru.nsu.yattroman.dormsys.DTO.metainfo.EventBoardElement;
 import ru.nsu.yattroman.dormsys.entity.Event;
 import ru.nsu.yattroman.dormsys.repository.ClubRepository;
 import ru.nsu.yattroman.dormsys.repository.EventRepository;
@@ -91,5 +92,11 @@ public class EventService implements IEventService {
     @Override
     public List<Event> getUpcomingEventsByClub(Long clubId) {
         return eventRepository.findEventsByClub_IdAndTakeTimeAfter(clubId, new Date());
+    }
+
+    @Override
+    public List<EventBoardElement> getTopPopularEvents(int n) {
+        var allEvents = eventRepository.findAllEventsWithParticipantsInfo();
+        return allEvents.size() <= n ? allEvents.subList(0, allEvents.size()) : allEvents.subList(0, n);
     }
 }

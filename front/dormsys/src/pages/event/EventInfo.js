@@ -1,11 +1,8 @@
-import React from ".";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import AuthService from "../../services/AuthService";
 import EventService from "../../services/EventService";
-import {Container} from "@mui/material";
-import {Row} from "react-bootstrap";
-import {MDBBtn} from "mdb-react-ui-kit";
+import {MDBBtn, MDBCol, MDBContainer, MDBRow} from "mdb-react-ui-kit";
 
 export default function EventInfo(){
     const {id} = useParams();
@@ -48,35 +45,40 @@ export default function EventInfo(){
     }
 
     return(
-        <Container>
-            <Row className="mt-2">
-                <h2 className="text-center">Main Info:</h2>
-            </Row>
-            <hr/>
-            <Row className="mt-3 justify-content-center">
-                <div className="col col-5">
-                    <Row>
-                        <h3>Description:</h3>
-                        <p>{eventInfo.description}</p>
-                        <p>Take time:</p>
-                        <p>{eventInfo.takeTime}</p>
-                    </Row>
+        <MDBContainer className="mt-5">
+            <MDBRow className="mt-2">
+                <h2 className="text-center">{eventInfo.name}</h2>
+            </MDBRow>
+            <MDBRow className="mt-3 justify-content-center">
+                <MDBCol md={8} sm={8}>
+                    <MDBRow className="mb-5">
+                        <MDBCol md={8} sm={8}>
+                            <h3>Description:</h3>
+                            <p>{eventInfo.description}</p>
+                        </MDBCol>
+                        <MDBCol md={4} sm={4}>
+                            <h4>Location:</h4>
+                            <p>{eventInfo.location}</p>
+                            <h4>Take time:</h4>
+                            <p>{eventInfo.takeTime}</p>
+                        </MDBCol>
+                    </MDBRow>
                     {!enrolled ?
-                        <Row className="justify-content-center">
-                            <MDBBtn color="dark" className="rounded-8 ps-5 pe-5 col-4" onClick={handleSubscribe}>
+                        <MDBRow className="justify-content-center">
+                            <MDBBtn color="dark" className="rounded-8 ps-5 pe-5 col-3" onClick={handleSubscribe}>
                                 Enroll
                             </MDBBtn>
-                        </Row>
+                        </MDBRow>
                         :
-                        <Row className="justify-content-center">
-                            <MDBBtn color="danger" className="rounded-8 ps-5 pe-5 col-4"
+                        <MDBRow className="justify-content-center">
+                            <MDBBtn color="danger" className="rounded-8 ps-5 pe-5 col-3"
                                     onClick={handleUnsubscribe}>
                                 Unenroll
                             </MDBBtn>
-                        </Row>
+                        </MDBRow>
                     }
-                </div>
-            </Row>
-        </Container>
+                </MDBCol>
+            </MDBRow>
+        </MDBContainer>
     )
 }

@@ -48,7 +48,7 @@ const enrollToEvent = (userId, eventId) => {
 
 const unenrollFromEvent = (userId, eventId) => {
     return axios
-        .delete(url + "event/participant",  {
+        .delete(url + "event/participant", {
             headers: AuthHeader(),
             params: {
                 userId: userId,
@@ -57,13 +57,43 @@ const unenrollFromEvent = (userId, eventId) => {
         });
 }
 
-const ClubServive = {
+const getEnrolledItemsByUser = (userId) => {
+    return axios
+        .get(url + "events/user"), {
+            headers: AuthHeader(),
+            params: {
+                userId: userId
+            }
+        }
+}
+
+const getEnrolledItemsByClub = (clubId) => {
+    return axios
+        .get(url + "events/club"), {
+            headers: AuthHeader(),
+            params: {
+                clubId: clubId
+            }
+        }
+}
+
+const getTopPopularEvents = (n) => {
+    return axios
+        .get(url + "events/top/" + n, {
+            headers: AuthHeader()
+        });
+}
+
+const EventService = {
     getEventDetails,
     getEventsPage,
     enrollToEvent,
     unenrollFromEvent,
+    getEnrolledItemsByClub,
+    getEnrolledItemsByUser,
+    getTopPopularEvents,
     addEvent
 };
 
-export default ClubServive;
+export default EventService;
 

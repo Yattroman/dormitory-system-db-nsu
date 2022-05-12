@@ -31,7 +31,6 @@ export default function SignIn() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         AuthService.login(form.nickname, form.password)
             .then(() => {
                     navigate("/profile");
@@ -43,7 +42,6 @@ export default function SignIn() {
                         error.message || error.toString();
                     setMessage(msg);
                 }
-
         )
     }
 

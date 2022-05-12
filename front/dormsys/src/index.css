@@ -26,3 +26,25 @@ label {
     -webkit-border-radius: 50%;
     border-radius: 50%;
 }
+
+.nav-tabs .nav-link {
+    background-color: transparent !important;
+    color: #888888;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+.nav-tabs .nav-link.active {
+    border-bottom: solid 2px #386c00 !important;
+    color: #000000;
+}
+
+.table {
+    border-width: 1px;
+    border-color: #aaaaaa;
+    border-style: solid;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
