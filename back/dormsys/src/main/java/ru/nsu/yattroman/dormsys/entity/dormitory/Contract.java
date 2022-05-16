@@ -16,16 +16,14 @@ public class Contract {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "start_time")
+    @Column(name = "start_time", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date startTime;
 
-    @Column(name = "end_time")
+    @Column(name = "end_time", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date endTime;
 
-//    @OneToOne(fetch = FetchType.LAZY)
-//    private Room room;
     @OneToOne(fetch = FetchType.LAZY)
     private Inhabitant inhabitant;
 

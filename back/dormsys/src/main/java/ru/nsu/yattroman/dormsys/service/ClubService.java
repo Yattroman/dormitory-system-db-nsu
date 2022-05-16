@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.nsu.yattroman.dormsys.DTO.club.ClubDto;
 import ru.nsu.yattroman.dormsys.DTO.metainfo.ClubBoardElement;
+import ru.nsu.yattroman.dormsys.DTO.metainfo.ClubEventsAvg;
 import ru.nsu.yattroman.dormsys.entity.User;
 import ru.nsu.yattroman.dormsys.entity.clubs.Club;
 import ru.nsu.yattroman.dormsys.entity.clubs.ClubManager;
@@ -128,5 +129,10 @@ public class ClubService implements IClubService {
     public List<ClubBoardElement> getTopPopularClubs(int n) {
         var allClubs = clubRepository.findAllClubsWithParticipantsInfo();
         return allClubs.size() <= n ? allClubs.subList(0, allClubs.size()) : allClubs.subList(0, n);
+    }
+
+    @Override
+    public List<ClubEventsAvg> getClubEventsAvgInfo() {
+        return clubRepository.findClubEventsAvg();
     }
 }

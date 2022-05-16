@@ -2,6 +2,7 @@ package ru.nsu.yattroman.dormsys.util;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,6 +13,7 @@ import ru.nsu.yattroman.dormsys.entity.dormitory.Room;
 import ru.nsu.yattroman.dormsys.entity.roles.Privilege;
 import ru.nsu.yattroman.dormsys.entity.roles.Role;
 import ru.nsu.yattroman.dormsys.repository.*;
+import ru.nsu.yattroman.dormsys.service.ClubService;
 
 import java.util.*;
 
@@ -29,9 +31,13 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     private final RoomRepository roomRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public SetupDataLoader(RoleRepository roleRepository, PrivilegeRepository privilegeRepository, UserRepository userRepository,
-                           EventRepository eventRepository, ClubRepository clubRepository, DormitoryRepository dormitoryRepository,
-                           RoomRepository roomRepository, PasswordEncoder passwordEncoder) {
+    private final ClubService clubService;
+
+    @Autowired
+    public SetupDataLoader(RoleRepository roleRepository, PrivilegeRepository privilegeRepository,
+                           UserRepository userRepository, EventRepository eventRepository, ClubRepository clubRepository,
+                           DormitoryRepository dormitoryRepository, RoomRepository roomRepository,
+                           PasswordEncoder passwordEncoder, ClubService clubService) {
         this.roleRepository = roleRepository;
         this.privilegeRepository = privilegeRepository;
         this.userRepository = userRepository;
@@ -40,6 +46,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         this.dormitoryRepository = dormitoryRepository;
         this.roomRepository = roomRepository;
         this.passwordEncoder = passwordEncoder;
+        this.clubService = clubService;
     }
 
     private User createRootUser(){
@@ -66,6 +73,17 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         usersMap.put(userId, true);
 
         return userRepository.findUserById(userId);
+    }
+
+    @Transactional
+    private void initClubsWithClubsManager(){
+        HashMap<Long, Boolean> users = new HashMap<>();
+        var clubs = clubRepository.findAll();
+        for (var club : clubs) {
+            var user = getNotRepeatedUser(users);
+            clubService.setClubManagerToClub(club, user.getId());
+            clubRepository.save(club);
+        }
     }
 
     @Transactional
@@ -143,6 +161,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
         createDormitoryIfNotFound("third");
         createUsers();
+        initClubsWithClubsManager();
         subscribeUsersToClubs();
         enrollUsersToEvents();
 

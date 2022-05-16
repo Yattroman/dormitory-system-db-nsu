@@ -31,7 +31,7 @@ public class ClubController {
     }
 
     @PostMapping("club")
-    public ResponseEntity<?> addClub(@RequestBody ClubDto clubDto){
+    public ResponseEntity<?> addClub(@RequestBody ClubDto clubDto) {
 
         var club = clubMapper.toEntity(clubDto);
 
@@ -43,11 +43,11 @@ public class ClubController {
     }
 
     @GetMapping("club/{clubId}")
-    public ResponseEntity<?> showClubDetails(@PathVariable Long clubId){
+    public ResponseEntity<?> showClubDetails(@PathVariable Long clubId) {
 
         var club = clubService.showClubDetails(clubId);
 
-        if(club == null){
+        if (club == null) {
             return ResponseEntity
                     .badRequest()
                     .body("There is no club with given id");
@@ -60,7 +60,7 @@ public class ClubController {
 
     @GetMapping("clubs")
     public ResponseEntity<?> showClubs(@RequestParam(defaultValue = "0") int page,
-                                       @RequestParam(defaultValue = "6") int size){
+                                       @RequestParam(defaultValue = "6") int size) {
 
         Pageable paging = PageRequest.of(page, size);
         var resultPage = clubService.showClubsPage(paging);
@@ -81,7 +81,7 @@ public class ClubController {
     }
 
     @PostMapping("club/participant")
-    public ResponseEntity<?> subscribeToClub(@RequestBody ClubSubscribeRequest request){
+    public ResponseEntity<?> subscribeToClub(@RequestBody ClubSubscribeRequest request) {
 
         clubService.subscribeUserToClub(request.getClubId(), request.getUserId());
 
@@ -91,7 +91,7 @@ public class ClubController {
     }
 
     @DeleteMapping("club/participant")
-    public ResponseEntity<?> unsubscribeFromClub(HttpServletRequest request){
+    public ResponseEntity<?> unsubscribeFromClub(HttpServletRequest request) {
         var clubId = request.getParameter("clubId");
         var userId = request.getParameter("userId");
 
@@ -102,7 +102,7 @@ public class ClubController {
                 .body("Use successfully unsubscribed from club");
     }
 
-    private HashMap<?, ?> wrapClubsToResponse(List<Club> clubs){
+    private HashMap<?, ?> wrapClubsToResponse(List<Club> clubs) {
         var userClubs = clubs.stream().map(clubMapper::toDTO).collect(Collectors.toList());
 
         HashMap<String, Object> response = new HashMap<>();
@@ -114,7 +114,7 @@ public class ClubController {
     }
 
     @GetMapping("clubs/user")
-    public ResponseEntity<?> getClubsByUser(HttpServletRequest request){
+    public ResponseEntity<?> getClubsByUser(HttpServletRequest request) {
         var userId = request.getParameter("userId");
         var response = wrapClubsToResponse(clubService.getClubsByUser(Long.parseLong(userId)));
 
@@ -124,7 +124,7 @@ public class ClubController {
     }
 
     @GetMapping("clubs/managing")
-    public ResponseEntity<?> getUserManagingClubs(HttpServletRequest request){
+    public ResponseEntity<?> getUserManagingClubs(HttpServletRequest request) {
         var userId = request.getParameter("userId");
         var response = wrapClubsToResponse(clubService.getClubsByClubManager(Long.parseLong(userId)));
 
@@ -134,9 +134,16 @@ public class ClubController {
     }
 
     @GetMapping("clubs/top/{n}")
-    public ResponseEntity<?> getTopPopularClubs(@PathVariable int n){
+    public ResponseEntity<?> getTopPopularClubs(@PathVariable int n) {
         return ResponseEntity
                 .ok()
                 .body(clubService.getTopPopularClubs(n));
+    }
+
+    @GetMapping("clubs/events/avg")
+    public ResponseEntity<?> getClubEventsAvgInfo(HttpServletRequest request) {
+        return ResponseEntity
+                .ok()
+                .body(clubService.getClubEventsAvgInfo());
     }
 }

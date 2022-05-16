@@ -2,7 +2,9 @@ package ru.nsu.yattroman.dormsys.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import ru.nsu.yattroman.dormsys.DTO.metainfo.ClubEventsAvg;
 import ru.nsu.yattroman.dormsys.DTO.metainfo.EventBoardElement;
 import ru.nsu.yattroman.dormsys.entity.Event;
 import ru.nsu.yattroman.dormsys.repository.ClubRepository;
@@ -11,6 +13,8 @@ import ru.nsu.yattroman.dormsys.repository.UserRepository;
 import ru.nsu.yattroman.dormsys.service.inerfaces.IEventService;
 import ru.nsu.yattroman.dormsys.util.Connect;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -47,8 +51,8 @@ public class EventService implements IEventService {
     }
 
     @Override
-    public Page<Event> showEventsPage(Pageable pageable) {
-        return eventRepository.findAll(pageable);
+    public Page<Event> showEventsPageFiltered(Specification<Event> specification, Pageable pageable) {
+        return eventRepository.findAll(specification, pageable);
     }
 
     private void manipulateUserAndEventConnection(Long eventId, Long userId, Connect connection){
@@ -95,8 +99,13 @@ public class EventService implements IEventService {
     }
 
     @Override
-    public List<EventBoardElement> getTopPopularEvents(int n) {
-        var allEvents = eventRepository.findAllEventsWithParticipantsInfo();
+    public List<EventBoardElement> getTopPopularEventsWithParticipantsRange(int n, long participantsMin, long participantsMax) {
+        var allEvents = eventRepository.findAllEventsWithParticipantsInfo(participantsMin, participantsMax);
         return allEvents.size() <= n ? allEvents.subList(0, allEvents.size()) : allEvents.subList(0, n);
+    }
+
+    @Override
+    public List<EventBoardElement> getClosestEvents(){
+        return eventRepository.getСlosestEvents();
     }
 }

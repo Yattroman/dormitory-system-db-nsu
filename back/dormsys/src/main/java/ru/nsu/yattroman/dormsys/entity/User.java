@@ -2,6 +2,7 @@ package ru.nsu.yattroman.dormsys.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Check;
 import ru.nsu.yattroman.dormsys.entity.clubs.Club;
 import ru.nsu.yattroman.dormsys.entity.clubs.ClubManager;
 import ru.nsu.yattroman.dormsys.entity.dormitory.DormitoryManager;
@@ -24,10 +25,12 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    @NonNull
+    @Column(nullable = false,
+            columnDefinition = "varchar(50) check(char_length(nickname) > 2 and char_length(nickname) < 30)")
     private String nickname;
-    @NonNull
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private String email;
     @Column(name = "first_name", length = 50, nullable = false)
     private String firstName;
@@ -35,9 +38,7 @@ public class User {
     private String middleName;
     @Column(name = "surname", length = 50, nullable = false)
     private String surname;
-//    @NonNull
     private Date dateBirth;
-//    @NonNull
     @Enumerated(EnumType.STRING)
     private Gender gender;
 

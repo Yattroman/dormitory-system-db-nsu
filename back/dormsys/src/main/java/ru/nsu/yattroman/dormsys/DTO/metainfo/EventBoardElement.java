@@ -11,7 +11,7 @@ public class EventBoardElement {
     private Long id;
     private String name;
     private String location;
-    private Date takeTime;
+    private String takeTime;
     private Long participantsNumber;
     private String clubOrg;
 }

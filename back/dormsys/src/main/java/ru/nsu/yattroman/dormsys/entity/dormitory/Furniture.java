@@ -14,12 +14,11 @@ public class Furniture {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @Column(name = "inner_code")
+    @Column(name = "inner_code", nullable = false)
     private String innerCode;
-    @NotNull
+    @Column(nullable = false)
     private String name;
-    @NotNull
+    @Column(nullable = false)
     private String category;
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)

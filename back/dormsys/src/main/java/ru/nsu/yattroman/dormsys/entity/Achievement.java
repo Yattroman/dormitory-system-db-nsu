@@ -11,7 +11,7 @@ public class Achievement {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
+    @Column(nullable = false)
     private String name;
     private String description;
 

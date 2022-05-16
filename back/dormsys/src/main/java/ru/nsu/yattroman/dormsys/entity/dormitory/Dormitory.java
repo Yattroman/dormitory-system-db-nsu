@@ -19,7 +19,7 @@ public class Dormitory {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
+    @Column(nullable = false)
     private String name;
 
     @OneToMany(

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.nsu.yattroman.dormsys.DTO.club.ClubDto;
 import ru.nsu.yattroman.dormsys.DTO.metainfo.ClubBoardElement;
+import ru.nsu.yattroman.dormsys.DTO.metainfo.ClubEventsAvg;
 import ru.nsu.yattroman.dormsys.entity.clubs.Club;
 
 import java.util.List;
@@ -24,4 +25,6 @@ public interface ClubRepository extends JpaRepository<Club, Long> {
             "left outer join cm.user cmu " +
             "group by c, cmu, cm order by count(cp) desc ")
     List<ClubBoardElement> findAllClubsWithParticipantsInfo();
+    @Query(name = "find_club_events_avg", nativeQuery = true)
+    List<ClubEventsAvg> findClubEventsAvg();
 }

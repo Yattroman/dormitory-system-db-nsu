@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import ru.nsu.yattroman.dormsys.DTO.club.ClubDto;
 import ru.nsu.yattroman.dormsys.DTO.metainfo.ClubBoardElement;
+import ru.nsu.yattroman.dormsys.DTO.metainfo.ClubEventsAvg;
 import ru.nsu.yattroman.dormsys.entity.clubs.Club;
 import ru.nsu.yattroman.dormsys.entity.clubs.ClubManager;
 
@@ -20,4 +21,5 @@ public interface IClubService {
     List<Club> getClubsByUser(Long userId);
     List<Club> getClubsByClubManager(Long clubManagerId);
     List<ClubBoardElement> getTopPopularClubs(int n);
+    List<ClubEventsAvg> getClubEventsAvgInfo();
 }
