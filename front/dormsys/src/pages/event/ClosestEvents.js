@@ -44,7 +44,7 @@ export default function ClosestEvents() {
                 <h3>Closest events</h3>
             </MDBRow>
             <MDBRow className="justify-content-center">
-                <MDBCol md={8}>
+                <MDBCol md={9}>
                     <MDBTable striped>
                         <MDBTableHead>
                             <tr>

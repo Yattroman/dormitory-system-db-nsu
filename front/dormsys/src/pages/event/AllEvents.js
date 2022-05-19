@@ -18,7 +18,7 @@ export default function AllEvents() {
     return (
         <>
             <ClosestEvents/>
-            {/*<FilteredEvents/>*/}
+            <FilteredEvents/>
         </>
     )
 }

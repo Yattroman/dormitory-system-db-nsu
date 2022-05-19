@@ -42,7 +42,7 @@ export default function App()  {
                         <Route path = "clubs/top" element={<TopClubs/>}/>
                         <Route path = "club/:id" element={<ClubInfo/>}/>
                         <Route path = "club/add" element={<ClubAdd/>}/>
-                        <Route path = "events" element={<FilteredEvents/>}/>
+                        <Route path = "events" element={<AllEvents/>}/>
                         <Route path = "events/top" element={<TopEvents/>}/>
                         <Route path = "event/:id" element={<EventInfo/>}/>
                         <Route path = "event/add" element={<EventAdd/>}/>

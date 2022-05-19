@@ -66,7 +66,7 @@ export default function SignIn() {
                     <Form.Group className="mb-3" controlId="passwordId">
                         <Form.Label>Password</Form.Label>
                         <Form.Control
-                            type = "text"
+                            type = "password"
                             name = "password"
                             placeholder="Password..."
                             onChange={handleChange}

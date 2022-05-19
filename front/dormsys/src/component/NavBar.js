@@ -37,6 +37,7 @@ export default function NavBar() {
                             <NavDropdown title="Clubs" id="basic-nav-dropdown">
                                 <NavDropdown.Item as={Link} to="/leisure/clubs">All Clubs</NavDropdown.Item>
                                 <NavDropdown.Item as={Link} to="/leisure/clubs/top">Top Clubs</NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/leisure/clubs/events/avg">Average Events Clubs</NavDropdown.Item>
                                 <NavDropdown.Divider/>
                                 <NavDropdown.Item as={Link} to="/leisure/club/add">Create Club</NavDropdown.Item>
                             </NavDropdown>
