@@ -21,5 +21,5 @@ public interface IClubService {
     List<Club> getClubsByUser(Long userId);
     List<Club> getClubsByClubManager(Long clubManagerId);
     List<ClubBoardElement> getTopPopularClubs(int n);
-    List<ClubEventsAvg> getClubEventsAvgInfo();
+    List<ClubEventsAvg> getClubsEventsAvgInfo();
 }

@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.nsu.yattroman.dormsys.DTO.club.ClubDto;
 import ru.nsu.yattroman.dormsys.controller.request.ClubSubscribeRequest;
-import ru.nsu.yattroman.dormsys.entity.Event;
 import ru.nsu.yattroman.dormsys.entity.clubs.Club;
 import ru.nsu.yattroman.dormsys.mapper.ClubMapper;
 import ru.nsu.yattroman.dormsys.service.inerfaces.IClubService;
@@ -141,9 +140,9 @@ public class ClubController {
     }
 
     @GetMapping("clubs/events/avg")
-    public ResponseEntity<?> getClubEventsAvgInfo(HttpServletRequest request) {
+    public ResponseEntity<?> getClubsEventsParticipantsInfo(HttpServletRequest request) {
         return ResponseEntity
                 .ok()
-                .body(clubService.getClubEventsAvgInfo());
+                .body(clubService.getClubsEventsAvgInfo());
     }
 }

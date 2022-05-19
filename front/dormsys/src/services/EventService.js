@@ -25,13 +25,16 @@ const addEvent = (name, location, description, takeTime, clubId) => {
         });
 }
 
-const getEventsPage = (page, size) => {
+const getEventsPage = (settings) => {
     return axios
         .get(url + "events", {
             headers: AuthHeader(),
             params: {
-                page: page,
-                size: size
+                page: settings.currentPage - 1,
+                size: settings.pageSize,
+                sortType: settings.sortType,
+                sortField: settings.sortField,
+                search: settings.search
             }
         });
 }
@@ -77,9 +80,21 @@ const getEnrolledItemsByClub = (clubId) => {
         }
 }
 
-const getTopPopularEvents = (n) => {
+const getTopPopularEvents = (settings) => {
     return axios
-        .get(url + "events/top/" + n, {
+        .get(url + "events/top", {
+            headers: AuthHeader(),
+            params: {
+                n: settings.n,
+                participantsMin: settings.participantsMin,
+                participantsMax: settings.participantsMax
+            }
+        });
+}
+
+const getClosestEvents = () => {
+    return axios
+        .get(url + "events/closest", {
             headers: AuthHeader()
         });
 }
@@ -92,7 +107,8 @@ const EventService = {
     getEnrolledItemsByClub,
     getEnrolledItemsByUser,
     getTopPopularEvents,
-    addEvent
+    addEvent,
+    getClosestEvents
 };
 
 export default EventService;

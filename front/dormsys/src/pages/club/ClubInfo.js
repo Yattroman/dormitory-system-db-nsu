@@ -16,7 +16,6 @@ export default function ClubInfo() {
 
     function checkIfClubsContainCertainClub(clubs) {
         for (const club of clubs) {
-            // console.log(club.id.toString())
             console.log(id)
             if (club.id === id) {
                 return true;

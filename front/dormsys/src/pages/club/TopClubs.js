@@ -43,7 +43,7 @@ export default function TopClubs() {
                             </tr>
                         </MDBTableHead>
                         <MDBTableBody>
-                            {/*{clubsInfo ? clubsInfo.map((club) => topClubItem(club)) : <p> No top clubs </p>}*/}
+                            {clubsInfo ? clubsInfo.map((club) => topClubItem(club)) : <p> No top clubs </p>}
                         </MDBTableBody>
                     </MDBTable>
                 </MDBCol>

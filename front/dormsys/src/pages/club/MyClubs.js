@@ -38,13 +38,13 @@ export default function MyClubs() {
         return (
             // <Grid item md={3} key={club.id}>
             <Grid item md={4} sm={6}>
-                <MDBCard className="m-1">
+                <MDBCard className="m-1 h-100">
                     <MDBRow>
                         <MDBCol md={8} className="ps-4 pt-4 align-items-center">
-                            {/*<h3><Link className="text-dark" to={"/leisure/club/" + club.id}>{club.name}</Link></h3>*/}
-                            {/*<p className="text-muted">@{club.uniqueName}</p>*/}
-                            <h4><Link className="text-dark" to={"/leisure/club/"+1}>Club name</Link></h4>
-                            <p className="text-muted">@uniquename</p>
+                            <h3><Link className="text-dark" to={"/leisure/club/" + club.id}>{club.name}</Link></h3>
+                            <p className="text-muted">@{club.uniqueName}</p>
+                            {/*<h4><Link className="text-dark" to={"/leisure/club/"+1}>Club name</Link></h4>*/}
+                            {/*<p className="text-muted">@uniquename</p>*/}
                         </MDBCol>
                         <MDBCol md={4} className="p-3 justify-content-center">
                             <img src="https://kitchen-profi.ru/img/f9eea/f9eeadebd7b3bc3f83c35798156e2f36x700x700x80.png"
@@ -65,21 +65,12 @@ export default function MyClubs() {
                 <Tabs defaultActiveKey="subscribedClubs" id="uncontrolled-tab-example" className="mb-3">
                     <Tab eventKey="subscribedClubs" title="Subscribed Clubs">
                         <Grid container spacing={1}>
-                            {/*{subscribedClubs ? subscribedClubs.map((club) => clubItem(club)) : <p>No subscribed clubs</p>}*/}
-                            {clubItem()}
-                            {clubItem()}
-                            {clubItem()}
-                            {clubItem()}
-                            {clubItem()}
-                            {clubItem()}
+                            {subscribedClubs ? subscribedClubs.map((club) => clubItem(club)) : <p>No subscribed clubs</p>}
                         </Grid>
                     </Tab>
                     <Tab eventKey="managingClubs" title="Managing Clubs">
                         <Grid container spacing={1}>
-                            {/*{managingClubs ? managingClubs.map((club) => clubItem(club)) : <p>No managing clubs</p>}*/}
-                            {clubItem()}
-                            {clubItem()}
-                            {clubItem()}
+                            {managingClubs ? managingClubs.map((club) => clubItem(club)) : <p>No managing clubs</p>}
                         </Grid>
                     </Tab>
                 </Tabs>

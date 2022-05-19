@@ -10,5 +10,5 @@ import lombok.Setter;
 public class ClubEventsAvg {
     private String clubName;
     private Double avgParticipantsNumber;
-    private Long participantsNumber;
+    private Long eventsNumber;
 }

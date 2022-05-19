@@ -83,6 +83,13 @@ const getTopPopularClubs = (n) => {
         });
 }
 
+const getClubsEventsStatistics = () => {
+    return axios
+        .get(url + "clubs/events/avg", {
+            headers: AuthHeader()
+        });
+}
+
 const ClubService = {
     getClubDetails,
     getClubsPage,
@@ -91,7 +98,8 @@ const ClubService = {
     getUserSubscribedClubs,
     getUserManagingClubs,
     getTopPopularClubs,
-    addClub
+    addClub,
+    getClubsEventsStatistics
 };
 
 export default ClubService;

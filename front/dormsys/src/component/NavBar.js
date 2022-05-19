@@ -36,11 +36,13 @@ export default function NavBar() {
                             <Nav.Link as={Link} to={"/profile"}>Profile</Nav.Link>
                             <NavDropdown title="Clubs" id="basic-nav-dropdown">
                                 <NavDropdown.Item as={Link} to="/leisure/clubs">All Clubs</NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/leisure/clubs/top">Top Clubs</NavDropdown.Item>
                                 <NavDropdown.Divider/>
                                 <NavDropdown.Item as={Link} to="/leisure/club/add">Create Club</NavDropdown.Item>
                             </NavDropdown>
                             <NavDropdown title="Events" id="basic-nav-dropdown">
                                 <NavDropdown.Item as={Link} to="/leisure/events">All Events</NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/leisure/events/top">Top Events</NavDropdown.Item>
                                 <NavDropdown.Divider/>
                                 <NavDropdown.Item as={Link} to="/leisure/event/add">Create Event</NavDropdown.Item>
                             </NavDropdown>

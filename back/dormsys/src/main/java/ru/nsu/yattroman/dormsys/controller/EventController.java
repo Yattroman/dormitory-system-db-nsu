@@ -70,7 +70,7 @@ public class EventController {
                 Integer.parseInt(request.getParameter("page")) : 0;
         var size = request.getParameter("size") != null ?
                 Integer.parseInt(request.getParameter("size")) : 10;
-        var sortField = request.getParameter("sortField") != null?
+        var sortField = request.getParameter("sortField") != null ?
                 request.getParameter("sortField") : "name";
         var sortType = request.getParameter("sortType") != null
                 && request.getParameter("sortType").equals("asc") ?
@@ -78,11 +78,10 @@ public class EventController {
         var searchParams = request.getParameter("search");
 
         EventSpecificationBuilder builder = new EventSpecificationBuilder();
-        Pattern pattern = Pattern.compile("(\\w+?)([:<>])(\\w+?),", Pattern.UNICODE_CHARACTER_CLASS);
-        Matcher matcher = pattern.matcher(searchParams + ",");
+        Pattern pattern = Pattern.compile("(\\w+)([:<>;])((\\w+)|(\\d{4}-\\d{2}-\\d{2})),", Pattern.UNICODE_CHARACTER_CLASS);
+        Matcher matcher = pattern.matcher(searchParams);
         while (matcher.find()) {
-            System.out.println(matcher.group(1) + " " + matcher.group(2) + " " + matcher.group(3));
-            builder.with(matcher.group(1), matcher.group(2), matcher.group(3));
+ы            builder.with(matcher.group(1), matcher.group(2), matcher.group(3));
         }
         Specification<Event> specification = builder.build();
 

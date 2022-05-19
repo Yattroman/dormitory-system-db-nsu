@@ -32,14 +32,14 @@ export default function MyEvents() {
                 const msg = (error.response && error.response.data) || error.message || error.toString();
                 setErrorMsg(msg);
             }
-        );*/
+        );
         ClubService.getUserManagingClubs(user.userId).then(
             (response) => setManagingEventsByManagingClubs(response.data.clubs),
             (error) => {
                 const msg = (error.response && error.response.data) || error.message || error.toString();
                 setErrorMsg(msg);
             }
-        )
+        )*/
     });
 
     const eventItem = (event) => {
@@ -80,13 +80,12 @@ export default function MyEvents() {
                             {eventItem()}
                             {eventItem()}
                             {eventItem()}
-                            {eventItem()}
-                            {eventItem()}
                         </Grid>
                     </Tab>
                     <Tab eventKey="managingEvents" title="Managing Events">
                         <Grid container spacing={1}>
                             {/*{managingEvents ? managingEvents.map((event) => eventItem(event)) : <p>No managing events</p>}*/}
+                            {eventItem()}
                             {eventItem()}
                             {eventItem()}
                             {eventItem()}

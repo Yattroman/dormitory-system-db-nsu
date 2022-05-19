@@ -25,6 +25,6 @@ public interface ClubRepository extends JpaRepository<Club, Long> {
             "left outer join cm.user cmu " +
             "group by c, cmu, cm order by count(cp) desc ")
     List<ClubBoardElement> findAllClubsWithParticipantsInfo();
-    @Query(name = "find_club_events_avg", nativeQuery = true)
-    List<ClubEventsAvg> findClubEventsAvg();
+    @Query(name = "find_clubs_events_avg", nativeQuery = true)
+    List<ClubEventsAvg> findClubsEventsAvg();
 }

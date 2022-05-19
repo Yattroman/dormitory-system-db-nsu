@@ -91,7 +91,7 @@ export default function AllClubs() {
                     { clubs ? clubs.map((club) => clubInfo(club)) : null }
                 </Grid>
             </Row>
-            <Row className="d-flex justify-content-center">
+            <Row>
                 <Pagination name="page"
                             value={pagesState.currentPage - 1}
                             totalPages={pagesState.totalPages}

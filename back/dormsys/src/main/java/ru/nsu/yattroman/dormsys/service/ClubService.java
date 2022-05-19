@@ -132,7 +132,7 @@ public class ClubService implements IClubService {
     }
 
     @Override
-    public List<ClubEventsAvg> getClubEventsAvgInfo() {
-        return clubRepository.findClubEventsAvg();
+    public List<ClubEventsAvg> getClubsEventsAvgInfo() {
+        return clubRepository.findClubsEventsAvg();
     }
 }

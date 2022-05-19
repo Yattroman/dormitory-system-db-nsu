@@ -72,6 +72,17 @@ public class User {
     @PrimaryKeyJoinColumn
     private Inhabitant inhabitant;
 
+    public User(String nickname, String password, String email, String firstName, String middleName, String surname, Date dateBirth, Gender gender) {
+        this.nickname = nickname;
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.surname = surname;
+        this.dateBirth = dateBirth;
+        this.gender = gender;
+    }
+
     public void addClub(Club club){
         clubs.add(club);
         club.getParticipants().add(this);

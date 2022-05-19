@@ -17,7 +17,7 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @NamedNativeQuery(
-        name = "find_club_events_avg",
+        name = "find_clubs_events_avg",
         query =
                 "with event_info_extended as ( " +
                         "select e.name, e.location, e.take_time, c.name as club_name, count(u) as participants " +
@@ -29,7 +29,7 @@ import java.util.Set;
                         "order by c.name, participants desc " +
                         ") " +
                         "select distinct club_name as clubName, round(avg(participants) over (partition by club_name), 0) as avgParticipantsNumber, " +
-                        "                count(participants) over (partition by club_name) as participantsNumber " +
+                        "                count(club_name) over (partition by club_name) as eventsNumber " +
                         "from event_info_extended",
         resultSetMapping = "club_events_avg"
 )
@@ -40,7 +40,7 @@ import java.util.Set;
                 columns = {
                         @ColumnResult(name = "clubName", type = String.class),
                         @ColumnResult(name = "avgParticipantsNumber", type = Double.class),
-                        @ColumnResult(name = "participantsNumber", type = Long.class)
+                        @ColumnResult(name = "eventsNumber", type = Long.class)
                 }
         )
 )
