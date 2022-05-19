@@ -15,7 +15,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class UserDto implements DTO{
-
     private Long id;
     @NotBlank(message = "Nickname is mandatory")
     @Size(min = 3, max = 30, message = "Nickname length must be >={min}, <={max}")
@@ -34,5 +33,4 @@ public class UserDto implements DTO{
     @Size(min = 5, max = 30, message = "Password length must be >={min}, <={max}")
     private String password;
     private List<String> roles;
-
 }

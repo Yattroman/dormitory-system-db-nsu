@@ -15,10 +15,11 @@ import ru.nsu.yattroman.dormsys.DTO.UserDto;
 import ru.nsu.yattroman.dormsys.entity.User;
 import ru.nsu.yattroman.dormsys.entity.roles.Role;
 import ru.nsu.yattroman.dormsys.exceptions.UserAlreadyExistException;
+import ru.nsu.yattroman.dormsys.mapper.UserMapper;
 import ru.nsu.yattroman.dormsys.security.JwtRequest;
 import ru.nsu.yattroman.dormsys.security.JwtResponse;
 import ru.nsu.yattroman.dormsys.security.JwtTokenUtil;
-import ru.nsu.yattroman.dormsys.service.UserService;
+import ru.nsu.yattroman.dormsys.service.inerfaces.IUserService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,13 +30,15 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private final UserService userService;
+    private final IUserService userService;
+    private final UserMapper userMapper;
     private final JwtTokenUtil jwtTokenUtil;
     private final DaoAuthenticationProvider daoAuthenticationProvider;
 
     @Autowired
-    public AuthController(UserService userService, JwtTokenUtil jwtTokenUtil, DaoAuthenticationProvider daoAuthenticationProvider) {
+    public AuthController(IUserService userService, UserMapper userMapper, JwtTokenUtil jwtTokenUtil, DaoAuthenticationProvider daoAuthenticationProvider) {
         this.userService = userService;
+        this.userMapper = userMapper;
         this.jwtTokenUtil = jwtTokenUtil;
         this.daoAuthenticationProvider = daoAuthenticationProvider;
     }
@@ -44,7 +47,8 @@ public class AuthController {
     public ResponseEntity<?> registerNewUserAccount(@Valid @RequestBody final UserDto userDto){
 
         try {
-            var user = userService.registerNewUserAccount(userDto);
+            var user = userMapper.toEntity(userDto);
+            userService.registerNewUserAccount(user);
         } catch (UserAlreadyExistException uaeEx) {
             return new ResponseEntity<>("User is already registered! " + uaeEx.getMessage(), HttpStatus.BAD_REQUEST);
         }

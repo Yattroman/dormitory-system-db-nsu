@@ -33,26 +33,18 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User registerNewUserAccount(UserDto userDto) throws UserAlreadyExistException {
-        if(nicknameExist(userDto.getNickname())){
+    public User registerNewUserAccount(User user) throws UserAlreadyExistException {
+        if(nicknameExist(user.getNickname())){
             throw new UserAlreadyExistException("User with specified nickname is already exist!");
         }
 
-        if(emailExist(userDto.getEmail())){
+        if(emailExist(user.getEmail())){
             throw new UserAlreadyExistException("User with specified email is already exist!");
         }
 
-        User user = new User();
-
-        user.setNickname(userDto.getNickname());
-        user.setFirstName(userDto.getFirstName());
-        user.setSurname(userDto.getSurname());
-        user.setMiddleName(userDto.getMiddleName());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setEmail(userDto.getEmail());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         var role = roleRepository.findByName("ROLE_USER");
-
         user.setRoles(Collections.singletonList(role));
 
         return userRepository.save(user);

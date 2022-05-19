@@ -6,7 +6,7 @@ import ru.nsu.yattroman.dormsys.entity.dormitory.DormitoryManager;
 
 public interface IUserService {
 
-    User registerNewUserAccount(UserDto userDto);
+    User registerNewUserAccount(User user);
     User loadUserByNickname(String nickname);
 
     DormitoryManager getDormitoryManagerInfo(Long id);

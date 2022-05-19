@@ -1,6 +1,7 @@
 package ru.nsu.yattroman.dormsys.entity;
 
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import lombok.*;
 import org.hibernate.annotations.Check;
 import ru.nsu.yattroman.dormsys.entity.clubs.Club;
